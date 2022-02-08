@@ -1,0 +1,103 @@
+\documentclass[12pt]{article}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage[superscript]{cite}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\graphicspath{ {Figures/} }
+\usepackage{caption}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\textwidth=6.5in
+\oddsidemargin=0.0in
+\usepackage{listings}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage[table]{xcolor}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Strengthy}
+\rhead{Page \thepage}
+
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    citecolor=black,
+    linktoc=all,
+    linkcolor=black,
+}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\center
+
+\textsc{\LARGE Missouri State University\\~\\Department computer Science}\\[1.0cm]
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Strengthy}\\[0.4cm]
+% change this \/
+{ \large A Weightlifting tracking webapp}\\[0.4cm]
+\HRule \\[1.5cm]
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+Dylan Bolger \\ Hayden Pope
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+Client Info \\
+Dr. Mohammed Y. Belkhouche\\
+
+\end{flushright}
+\end{minipage}\\[2cm]
+
+{\large \today}\\[2cm]
+
+\end{titlepage}
+
+\newpage
+%-----------------------------------------------------------------------
+\tableofcontents
+
+\newpage
+%----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+\section{Project Description}
+\subsection{Proposal}
+Our proposal is to develop a web application to track weightlifting sessions, progress, and statistics. This web-app will allow users to create personal accounts to track their information. We will allow the user to upload their data from days at the gym and be able to watch their progress as they continue to go to the gym. It will also show useful calculations, such as percentages of your 1RM (the most weight you can endure in one rep). Statistics like progress prediction of the user and analysis will be included. Users will also be able to create their own workout plans, or routines. The routines will suggest values in order for the user to make meaningful progression at the gym. Users can also record their weight.
+
+\subsection{Stack}
+The web application will be developed in Python using the Flask framework. A database will be used to store user information, likely SQLite. Graphs displayed to the user will be rendered using chart.js.
+
+
+\section{Project Requirements}
+\begin{description}
+    \item[1.0 - User Account Management]
+        Users will be able to create their own account based on a username, email and a password combination. The email will be validated using the input field but not used during creation to verify the user's email. Users will be able to login to said account and view their recorded data and other information provided further in detail below. Users can also delete all data and their account from the databases storing information they have in the webapp. Users can also edit their password in order to change it after its been set - emails and usernames cannot be changed after account creation.    \item[2.1 - Homepage]
+        Users will land on a homepage that outlines what Strengthy is all about. This will show images of fitness, and a bold description of what the application can do. This is expected to be efficient and speedy for users to enter on both desktop and on the mobile device.      \item[2.2 - Homepage (Logged in)]
+        When a user is logged in, they will be presented with a homepage suggesting to create a goal, view predictions, view past records, and record their workout. When viewing their information, they will see figures based on linear or exponential regressions information that describes where they can expect to be by the time they set their goal.    \item[2.3 - Goal Setting]         Goal setting is a fundamental piece to Strengthy. Strengthy will request a user provides a goal in order to get a prediction model being built based on what the user expects to be able to accomplish by a specific date.\end{description} 
+
+\begingroup
+\renewcommand{\section}[2]{}
+\begin{thebibliography}{10}
+
+\bigskip
+
+
+\end{thebibliography}
+\endgroup
+
+
+\end{document}
