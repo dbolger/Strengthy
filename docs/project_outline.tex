@@ -83,11 +83,78 @@ The web application will be developed in Python using the Flask framework. A dat
 
 
 \section{Project Requirements}
+
+\subsection{Web Application Framework}
 \begin{description}
-    \item[1.0 - User Account Management]
-        Users will be able to create their own account based on a username, email and a password combination. The email will be validated using the input field but not used during creation to verify the user's email. Users will be able to login to said account and view their recorded data and other information provided further in detail below. Users can also delete all data and their account from the databases storing information they have in the webapp. Users can also edit their password in order to change it after its been set - emails and usernames cannot be changed after account creation.    \item[2.1 - Homepage]
-        Users will land on a homepage that outlines what Strengthy is all about. This will show images of fitness, and a bold description of what the application can do. This is expected to be efficient and speedy for users to enter on both desktop and on the mobile device.      \item[2.2 - Homepage (Logged in)]
-        When a user is logged in, they will be presented with a homepage suggesting to create a goal, view predictions, view past records, and record their workout. When viewing their information, they will see figures based on linear or exponential regressions information that describes where they can expect to be by the time they set their goal.    \item[2.3 - Goal Setting]         Goal setting is a fundamental piece to Strengthy. Strengthy will request a user provides a goal in order to get a prediction model being built based on what the user expects to be able to accomplish by a specific date.\end{description} 
+	\item[Description] The entire application will be running on a web server that can handle requests to certain urls and respond to them with html pages.
+	\item[Rational] The web as an interface for users to interact with the application makes it portable and easy to use for most users.
+	\item[Inputs] HTTP requests
+	\item[Outputs] Rendered HTML pages
+	\item[Dependencies] The Flask framework in Python.
+\end{description}
+
+\subsection{User Account Management}
+\begin{description}
+	\item[Description] Users will be able to create their own account based on a username, email and a password combination. The email will be validated using the input field but not used during creation to verify the user's email. Users will be able to login to said account and view their recorded data and other information provided further in detail below. Users can also delete all data and their account from the databases storing information they have in the webapp. Users can also edit their password in order to change it after its been set - emails and usernames cannot be changed after account creation.
+	\item[Rational] Account management is needed so that the system can support more than one user, and access their data independently
+	\item[Inputs] A username, password, and email. Username and email must be unique.
+	\item[Outputs] Username, password hash, and email will be stored in the database.
+	\item[Dependencies] The web application
+\end{description}
+
+\subsection{Homepage}
+\begin{description}
+	\item[Description] Users will land on a homepage that outlines what Strengthy is all about. This will show images of fitness, and a bold description of what the application can do. This is expected to be efficient and speedy for users to enter on both desktop and on the mobile device.
+	\item[Rational] New users need to learn what the application is, and why they might be interested in using it.
+	\item[Inputs] Login State from User Account Management
+	\item[Outputs] A HTML Page as described above
+	\item[Dependencies] User Account Management
+\end{description}
+
+\subsection{Homepage (Logged In)}
+\begin{description}
+	\item[Description] When a user is logged in, they will be presented with a homepage suggesting to create a goal, view predictions, view past records, and record a new workout.
+	\item[Rational] New users need to learn what the application is, and why they might be interested in using it.
+	\item[Inputs] Login State from User Account Management
+	\item[Outputs] A HTML Page as described above
+	\item[Dependencies] User Account Management
+\end{description}
+
+\subsection{Workout Creation}
+\begin{description}
+	\item[Description] Users will be able to create new workouts. A workout consists of a set of exercises. Users will be able to enter a list of exercises into a form, and save them to their account. Users can also specify if a exercise is rep based (ex bench press), or time based (ex sprinting)
+	\item[Rational] Workouts will be accessed when the user wants to record a session.
+	\item[Inputs] List of exercises from form.
+	\item[Outputs] Workout will be saved to a database.
+	\item[Dependencies] User account management, user will need to be logged in
+\end{description}
+
+\subsection{Workout Recording}
+\begin{description}
+	\item[Description] Users will be able to record while they are currently doing a workout. Exercises will appear in an interface in the order specified when the workout was created. If an exercise is time based, the user will be able to start and stop a timer. If the exercise is rep based, a user will be able to enter the number of reps they did, and continue to another set or continue to the next exercise in the workout.
+	\item[Rational] Users need to be able to record workouts to save data, and have access to predictions
+	\item[Inputs] Data entry from user during workout untill completion or logout.
+	\item[Outputs] Data will be saved to a database.
+	\item[Dependencies] User account management, user will need to be logged in
+\end{description}
+
+\subsection{Workout Routines}
+\begin{description}
+	\item[Description] Users will be able to establish routines, which is a set of workouts that will be completed for each day of the week.
+	\item[Rational] Routines will allow the user to quickly access which workout they will be doing that day.
+	\item[Inputs] List of exercises for each day entered by user in form
+	\item[Outputs] Routines will be saved to a database
+	\item[Dependencies] User account management, user will need to be logged in
+	
+% TODO add routines to homepage
+
+%When viewing their information, they will see figures based on linear or exponential regressions information that describes where they can expect to be by the time they set their goal.
+
+
+\item[2.3 - Goal Setting]
+Goal setting is a fundamental piece to Strengthy. Strengthy will request a user provides a goal in order to get a prediction model being built based on what the user expects to be able to accomplish by a specific date.
+
+\end{description}
 
 \begingroup
 \renewcommand{\section}[2]{}
