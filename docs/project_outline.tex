@@ -82,6 +82,7 @@ Our proposal is to develop a web application to track weightlifting sessions, pr
 The web application will be developed in Python using the Flask framework. A database will be used to store user information, likely SQLite. Graphs displayed to the user will be rendered using chart.js.
 
 
+%-----------------------------------------------------------------------------
 \section{Project Requirements}
 
 \subsection{Web Application Framework}
@@ -93,13 +94,40 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] The Flask framework in Python.
 \end{description}
 
-\subsection{User Account Management}
+\subsection{User Account Registration}
 \begin{description}
-	\item[Description] Users will be able to create their own account based on a username, email and a password combination. The email will be validated using the input field but not used during creation to verify the user's email. Users will be able to login to said account and view their recorded data and other information provided further in detail below. Users can also delete all data and their account from the databases storing information they have in the webapp. Users can also edit their password in order to change it after its been set - emails and usernames cannot be changed after account creation.
-	\item[Rational] Account management is needed so that the system can support more than one user, and access their data independently
-	\item[Inputs] A username, password, and email. Username and email must be unique.
-	\item[Outputs] Username, password hash, and email will be stored in the database.
-	\item[Dependencies] The web application
+	\item[Description] Users will be able to create there own account using an username, email, and password. The username and email must be unique, and the email must be a valid email address.
+	\item[Rational] Users need to be able to create accounts to store their personal data
+	\item[Inputs] Username, email, and password combo created by users
+	\item[Outputs] Username, email, and password hash will be stored in a database.
+	\item[Dependencies] None
+\end{description}
+
+\subsection{User Account Login}
+\begin{description}
+	\item[Description] Users will be able to login to their account using their username and password. If the username or password are invalid, an error will be displayed to the user. Users will remained logged in using cookies to try and minimize the amount of times a user has to login during a workout session.
+	\item[Rational] Users need to be able to login to their accounts to input data.
+	\item[Inputs] Username and password combo provided by user.
+	\item[Outputs] A cookie will be set marking the user as logged in.
+	\item[Dependencies] None
+\end{description}
+
+\subsection{User Account Update}
+\begin{description}
+	\item[Description] Users will be able to change their password.
+	\item[Rational] Allow users to use whichever password they want.
+	\item[Inputs] USer inputs old and new password in a form.
+	\item[Outputs] User's password is updated in the database.
+	\item[Dependencies] User will need to be logged in. 
+\end{description}
+
+\subsection{User Account Deletion}
+\begin{description}
+	\item[Description] Users will be able to delete their account and all data attached to their account. 
+	\item[Rational] Users can choose not to have their data stored by Strengthy.
+	\item[Inputs] User presses a delete button with a "Are you sure?" confirmation.
+	\item[Outputs] User account data is deleted from the database.
+	\item[Dependencies] User will need to be logged in. 
 \end{description}
 
 \subsection{Homepage}
@@ -108,7 +136,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Rational] New users need to learn what the application is, and why they might be interested in using it.
 	\item[Inputs] Login State from User Account Management
 	\item[Outputs] A HTML Page as described above
-	\item[Dependencies] User Account Management
+	\item[Dependencies] None
 \end{description}
 
 \subsection{Homepage (Logged In)}
@@ -117,7 +145,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Rational] New users need to learn what the application is, and why they might be interested in using it.
 	\item[Inputs] Login State from User Account Management
 	\item[Outputs] A HTML Page as described above
-	\item[Dependencies] User Account Management
+	\item[Dependencies] User will need to be logged in
 \end{description}
 
 \subsection{Workout Creation}
@@ -126,7 +154,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Rational] Workouts will be accessed when the user wants to record a session.
 	\item[Inputs] List of exercises from form.
 	\item[Outputs] Workout will be saved to a database.
-	\item[Dependencies] User account management, user will need to be logged in
+	\item[Dependencies] User will need to be logged in
 \end{description}
 
 \subsection{Workout Recording}
@@ -135,7 +163,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Rational] Users need to be able to record workouts to save data, and have access to predictions
 	\item[Inputs] Data entry from user during workout untill completion or logout.
 	\item[Outputs] Data will be saved to a database.
-	\item[Dependencies] User account management, user will need to be logged in
+	\item[Dependencies] User will need to be logged in
 \end{description}
 
 \subsection{Workout Routines}
@@ -144,17 +172,49 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Rational] Routines will allow the user to quickly access which workout they will be doing that day.
 	\item[Inputs] List of exercises for each day entered by user in form
 	\item[Outputs] Routines will be saved to a database
-	\item[Dependencies] User account management, user will need to be logged in
+	\item[Dependencies] User will need to be logged in
+\end{description}
+
+\subsection{Workout History}
+\begin{description}
+	\item[Description] Users will be able to view a calendar showing the days they worked out, and if a specific day is hovered over they will be able to see which workout they completed.
+	\item[Rational] Seeing a monthly view of workouts helps users keep track of progress and how often they are training.
+	\item[Inputs] None
+	\item[Outputs] None
+	\item[Dependencies] User will need to be logged in, and have recorded at least one workout. 
+\end{description}
+
+\subsection{Exercise Progress}
+\begin{description}
+	\item[Description] Users will be able to select a certain exercise (ex bench press), and view a graph of their progress on this specific exercise. Users can select to graph based on volume, or on estimated 1RM (one rep max). This graph will pull data from previously recorded workouts. 
+	\item[Rational] Users need to be able to monitor their progress to see if they are on track in their training.
+	\item[Inputs] Selected exercise and graph style inputted by user, and data stored in the database.
+	\item[Outputs] None
+	\item[Dependencies] User will need to be logged in, and have recored at least one set of the selected exercise.
+\end{description}
+
+\subsection{Exercise Goals}
+\begin{description}
+	\item[Description] Users will be able to select a certain exercise, and selecte a weight goal. The application will then render a graph showing a user's past progress like in the Exercise Progress requirement, but also will continue this graph using a regression to see how long it will take the user to reach the inputted weight goal, based on previous progress. If the user has not completed enough sets of the exercise to make a reliable prediciton, a warning will be displayed to the user.
+	\item[Rational] Users can predict when they can expect to reach certain weight goals, and adjust their training based on these predictions.
+	\item[Inputs] Selected exercise and weight goal inputted by the user. Data stored in the database.
+	\item[Outputs] None
+	\item[Dependencies] User will need to be logged in, and have recorded at least two sets of the selected exercise.
+\end{description}
+
+%TEMPLATE
+\subsection{}
+\begin{description}
+	\item[Description]
+	\item[Rational]
+	\item[Inputs]
+	\item[Outputs]
+	\item[Dependencies]
+\end{description}
 	
 % TODO add routines to homepage
 
-%When viewing their information, they will see figures based on linear or exponential regressions information that describes where they can expect to be by the time they set their goal.
-
-
-\item[2.3 - Goal Setting]
-Goal setting is a fundamental piece to Strengthy. Strengthy will request a user provides a goal in order to get a prediction model being built based on what the user expects to be able to accomplish by a specific date.
-
-\end{description}
+%\end{description}
 
 \begingroup
 \renewcommand{\section}[2]{}
