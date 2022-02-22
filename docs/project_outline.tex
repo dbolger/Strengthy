@@ -202,19 +202,32 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in, and have recorded at least two sets of the selected exercise.
 \end{description}
 
-%TEMPLATE
-%\subsection{}
-%\begin{description}
-%	\item[Description]
-%	\item[Rational]
-%	\item[Inputs]
-%	\item[Outputs]
-%	\item[Dependencies]
-%\end{description}
-	
-% TODO add routines to homepage
+\subsection{Database Storage}
+\begin{description}
+	\item[Description] The database needs to have the storage to handle around 8 tables with around 1 million rows, so that there is ample storage for workout recordings.
+	\item[Rational] Active users will likely be recorded workouts every single day, so the database needs to be able to handle many rows.
+	\item[Inputs] None
+	\item[Outputs] None
+	\item[Dependencies] None
+\end{description}
 
-%\end{description}
+\subsection{Database Storage}
+\begin{description}
+	\item[Description] The database needs to have the storage to handle around 8 tables with around 1 million rows, so that there is ample storage for workout recordings.
+	\item[Rational] Active users will likely be recorded workouts every single day, so the database needs to be able to handle many rows.
+	\item[Inputs] None
+	\item[Outputs] None
+	\item[Dependencies] None
+\end{description}
+
+\subsection{Application Response Time}
+\begin{description}
+	\item[Description] The application needs to be able to handle multiple users at once, reasonably around 100 concurrent users.
+	\item[Rational] Multiple users may be recording workouts at once, and the application needs to remain responsive while this is happening.
+	\item[Inputs] None
+	\item[Outputs] None
+	\item[Dependencies] None
+\end{description}
 
 \begingroup
 \renewcommand{\section}[2]{}
