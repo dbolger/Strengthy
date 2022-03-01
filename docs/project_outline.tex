@@ -44,8 +44,7 @@
 
 \HRule \\[0.4cm]
 { \huge \bfseries Strengthy}\\[0.4cm]
-% change this \/
-{ \large A Weightlifting tracking webapp}\\[0.4cm]
+{ \large A fitness tracking webapp}\\[0.4cm]
 \HRule \\[1.5cm]
 
 \begin{minipage}{0.4\textwidth}
@@ -76,25 +75,16 @@ Dr. Mohammed Y. Belkhouche\\
 %-----------------------------------------------------------------------------
 \section{Project Description}
 \subsection{Proposal}
-Our proposal is to develop a web application to track weightlifting sessions, progress, and statistics. This web-app will allow users to create personal accounts to track their information. We will allow the user to upload their data from days at the gym and be able to watch their progress as they continue to go to the gym. It will also show useful calculations, such as percentages of your 1RM (the most weight you can endure in one rep). Statistics like progress prediction of the user and analysis will be included. Users will also be able to create their own workout plans, or routines. The routines will suggest values in order for the user to make meaningful progression at the gym. Users can also record their weight.
+Our proposal is to develop a web application to track weightlifting sessions, progress, and statistics. This web-app will allow users to create personal accounts to track their information. We will allow the user to upload their data from days at the gym and be able to watch their progress as they continue to go to the gym. It will also show useful calculations, such as percentages of your 1RM (One repetition max). Statistics like progress prediction of the user and analysis will be included. Users will also be able to create their own workout plans, or routines. The routines will suggest values in order for the user to make meaningful progression at the gym. Users can also record their weight.
 
 \subsection{Stack}
 The web application will be developed in Python using the Flask framework. A database will be used to store user information, likely SQLite. Graphs displayed to the user will be rendered using chart.js.
 
 
 %-----------------------------------------------------------------------------
-\section{Project Requirements}
+\section{Project Functional Requirements}
 
-\subsection{Web Application Framework}
-\begin{description}
-	\item[Description] The entire application will be running on a web server that can handle requests to certain urls and respond to them with html pages.
-	\item[Rational] The web as an interface for users to interact with the application makes it portable and easy to use for most users.
-	\item[Inputs] HTTP requests
-	\item[Outputs] Rendered HTML pages
-	\item[Dependencies] The Flask framework in Python.
-\end{description}
-
-\subsection{User Account Registration}
+\subsection{Req. 1 - User Account Registration}
 \begin{description}
 	\item[Description] Users will be able to create there own account using an username, email, and password. The username and email must be unique, and the email must be a valid email address.
 	\item[Rational] Users need to be able to create accounts to store their personal data
@@ -103,7 +93,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] None
 \end{description}
 
-\subsection{User Account Login}
+\subsection{Req. 2 - User Account Login}
 \begin{description}
 	\item[Description] Users will be able to login to their account using their username and password. If the username or password are invalid, an error will be displayed to the user. Users will remained logged in using cookies to try and minimize the amount of times a user has to login during a workout session.
 	\item[Rational] Users need to be able to login to their accounts to input data.
@@ -112,7 +102,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] None
 \end{description}
 
-\subsection{User Account Update}
+\subsection{Req. 3 - User Account Update}
 \begin{description}
 	\item[Description] Users will be able to change their password.
 	\item[Rational] Allow users to use whichever password they want.
@@ -121,7 +111,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in. 
 \end{description}
 
-\subsection{User Account Deletion}
+\subsection{Req. 4 - User Account Deletion}
 \begin{description}
 	\item[Description] Users will be able to delete their account and all data attached to their account. 
 	\item[Rational] Users can choose not to have their data stored by Strengthy.
@@ -130,7 +120,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in. 
 \end{description}
 
-\subsection{Homepage}
+\subsection{Req. 5 - Homepage}
 \begin{description}
 	\item[Description] Users will land on a homepage that outlines what Strengthy is all about. This will show images of fitness, and a bold description of what the application can do. This is expected to be efficient and speedy for users to enter on both desktop and on the mobile device.
 	\item[Rational] New users need to learn what the application is, and why they might be interested in using it.
@@ -139,7 +129,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] None
 \end{description}
 
-\subsection{Homepage (Logged In)}
+\subsection{Req. 6 - User Homepage}
 \begin{description}
 	\item[Description] When a user is logged in, they will be presented with a homepage suggesting to create a goal, view predictions, view past records, and record a new workout.
 	\item[Rational] New users need to learn what the application is, and why they might be interested in using it.
@@ -148,16 +138,16 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in
 \end{description}
 
-\subsection{Workout Creation}
+\subsection{Req. 7 - Workout Creation}
 \begin{description}
-	\item[Description] Users will be able to create new workouts. A workout consists of a set of exercises. Users will be able to enter a list of exercises into a form, and save them to their account. Users can also specify if a exercise is rep based (ex bench press), or time based (ex sprinting)
+    \item[Description] Users will be able to create new workouts. A workout consists of a set of exercises. Users will be able to enter a list of exercises into a form, and save them to their account. Users can also specify if a exercise is repetition (rep) based (ex bench press), or time based (ex sprinting)
 	\item[Rational] Workouts will be accessed when the user wants to record a session.
 	\item[Inputs] List of exercises from form.
 	\item[Outputs] Workout will be saved to a database.
 	\item[Dependencies] User will need to be logged in
 \end{description}
 
-\subsection{Workout Recording}
+\subsection{Req. 8 - Workout Recording}
 \begin{description}
 	\item[Description] Users will be able to record while they are currently doing a workout. Exercises will appear in an interface in the order specified when the workout was created. If an exercise is time based, the user will be able to start and stop a timer. If the exercise is rep based, a user will be able to enter the number of reps they did, and continue to another set or continue to the next exercise in the workout.
 	\item[Rational] Users need to be able to record workouts to save data, and have access to predictions
@@ -166,7 +156,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in
 \end{description}
 
-\subsection{Workout Routines}
+\subsection{Req. 9 - Workout Routines}
 \begin{description}
 	\item[Description] Users will be able to establish routines, which is a set of workouts that will be completed for each day of the week.
 	\item[Rational] Routines will allow the user to quickly access which workout they will be doing that day.
@@ -175,7 +165,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in
 \end{description}
 
-\subsection{Workout History}
+\subsection{Req. 10 - Workout History}
 \begin{description}
 	\item[Description] Users will be able to view a calendar showing the days they worked out, and if a specific day is hovered over they will be able to see which workout they completed.
 	\item[Rational] Seeing a monthly view of workouts helps users keep track of progress and how often they are training.
@@ -184,7 +174,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in, and have recorded at least one workout. 
 \end{description}
 
-\subsection{Exercise Progress}
+\subsection{Req. 11 - Exercise Progress}
 \begin{description}
 	\item[Description] Users will be able to select a certain exercise (ex bench press), and view a graph of their progress on this specific exercise. Users can select to graph based on volume, or on estimated 1RM (one rep max). This graph will pull data from previously recorded workouts. 
 	\item[Rational] Users need to be able to monitor their progress to see if they are on track in their training.
@@ -193,7 +183,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] User will need to be logged in, and have recored at least one set of the selected exercise.
 \end{description}
 
-\subsection{Exercise Goals}
+\subsection{Req. 12 - Exercise Goals}
 \begin{description}
 	\item[Description] Users will be able to select a certain exercise, and selecte a weight goal. The application will then render a graph showing a user's past progress like in the Exercise Progress requirement, but also will continue this graph using a regression to see how long it will take the user to reach the inputted weight goal, based on previous progress. If the user has not completed enough sets of the exercise to make a reliable prediciton, a warning will be displayed to the user.
 	\item[Rational] Users can predict when they can expect to reach certain weight goals, and adjust their training based on these predictions.
@@ -201,8 +191,9 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Outputs] None
 	\item[Dependencies] User will need to be logged in, and have recorded at least two sets of the selected exercise.
 \end{description}
+\section{Project Non-Functional Requirements}
 
-\subsection{Database Storage}
+\subsection{Req. 13 - Database Storage}
 \begin{description}
 	\item[Description] The database needs to have the storage to handle around 8 tables with around 1 million rows, so that there is ample storage for workout recordings.
 	\item[Rational] Active users will likely be recorded workouts every single day, so the database needs to be able to handle many rows.
@@ -211,7 +202,7 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Dependencies] None
 \end{description}
 
-\subsection{Application Response Time}
+\subsection{Req. 14 - Application Response Time}
 \begin{description}
 	\item[Description] The application needs to be able to handle multiple users at once, reasonably around 100 concurrent users.
 	\item[Rational] Multiple users may be recording workouts at once, and the application needs to remain responsive while this is happening.
