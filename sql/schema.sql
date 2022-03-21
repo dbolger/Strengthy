@@ -1,0 +1,6 @@
+-- User table
+CREATE TABLE user(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	email TEXT NOT NULL,
+	hash TEXT NOT NULL
+);
