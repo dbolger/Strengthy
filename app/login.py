@@ -1,7 +1,25 @@
 from app import app
 from database import database_get
 from flask_login import LoginManager, UserMixin, current_user
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import DataRequired, Email
 
+# https://python.plainenglish.io/implementing-flask-login-with-hash-password-888731c88a99
+
+# Forms classes for flask_wtf
+class LoginForm(FlaskForm):
+    username = StringField("username", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+    remember_me = BooleanField()
+
+class RegisterForm(FlaskForm):
+    username = StringField("username", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+    name = StringField("name")
+    email = StringField("email", validators=[DataRequired(), Email()])
+
+# User class for flask_login
 class User(UserMixin):
     def __init__(self, id, email, password_hash):
         self.id = unicode(id)
