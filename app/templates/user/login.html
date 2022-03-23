@@ -1,112 +1,50 @@
-<!doctype HTML>
-<html lang="en">
-    <head>
-        <meta charset="utf8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends 'base.html' %}
 
-        <!-- Bulma css -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-
-        <title>Strenghty 💪</title>
-    </head>
-    <body>
-        <!-- navbar -->
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="/">
-                    <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-                </a>
-
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item">
-                        Start a Workout
-                    </a>
-
-                    <a class="navbar-item">
-                        Progress
-                    </a>
-
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            More
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                TODO
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TODO: change based on login state -->
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a class="button is-primary" href="register"><strong>Sign up</strong></a>
-                            <a class="button is-light" href="login">Log in</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Actual content -->
-        {% block content %}{% endblock %}
-        <div class="login">
-            <div class="form">
-                <section class="hero is-primary is-fullheight">
-                    <div class="hero-body">
-                        <div class="container">
-                            <div class="columns is-centered">
-                                <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                                    <h1 class="title is-2">Log in</h1>
-                                    <form action="" class="box">
-                                        <div class="field">
-                                            <label for="" class="label">Email</label>
-                                            <div class="control has-icons-left">
-                                                <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
-                                                <span class="icon is-small is-left">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <label for="" class="label">Password</label>
-                                            <div class="control has-icons-left">
-                                                <input type="password" placeholder="*******" class="input" required>
-                                                <span class="icon is-small is-left">
-                                                    <i class="fa fa-lock"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <label for="" class="checkbox">
-                                                <input type="checkbox">
-                                                Remember me
-                                            </label>
-                                        </div>
-                                        <div class="field">
-                                            <button class="button is-success">
-                                                Log in
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-        <!-- TODO: footer -->
-    </body>
-</html>
+{% block content %}
+	<div class="login">
+		<div class="form">
+			<section class="hero is-primary is-fullheight">
+				<div class="hero-body">
+					<div class="container">
+						<div class="columns is-centered">
+							<div class="column is-5-tablet is-4-desktop is-3-widescreen">
+								<h1 class="title is-2">Log in</h1>
+								<form action="" class="box">
+									<div class="field">
+										<label for="" class="label">Email</label>
+										<div class="control has-icons-left">
+											<input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+											<span class="icon is-small is-left">
+												<i class="fa fa-envelope"></i>
+											</span>
+										</div>
+									</div>
+									<div class="field">
+										<label for="" class="label">Password</label>
+										<div class="control has-icons-left">
+											<input type="password" placeholder="*******" class="input" required>
+											<span class="icon is-small is-left">
+												<i class="fa fa-lock"></i>
+											</span>
+										</div>
+									</div>
+									<div class="field">
+										<label for="" class="checkbox">
+											<input type="checkbox">
+											Remember me
+										</label>
+									</div>
+									<div class="field">
+										<button class="button is-success">
+											Log in
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+{% endblock %}
