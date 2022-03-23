@@ -6,12 +6,12 @@ from tables.user import User
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template('base/index.html')
+    return render_template('index.html')
 
 @app.route("/home", methods=["GET"])
 @login_required
 def home():
-    return render_template('base/home.html')
+    return render_template('home.html')
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
