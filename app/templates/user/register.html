@@ -1,57 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'base/form.html' %}
 
-{% block content %}
-	<div class="register">
-		<div class="form">
-			<section class="hero is-primary is-fullheight-with-navbar">
-				<div class="hero-body">
-					<div class="container">
-						<div class="columns is-centered">
-							<div class="column is-5-tablet is-4-desktop is-3-widescreen">
-								<h1 class="title is-2">Sign up</h1>
+{% block title %}Sign Up{% endblock %}
 
-								<!-- TODO: render errors -->
-
-								<form method="POST" class="box">
-									{{ form.csrf_token }}
-									<div class="field">
-										<label for="" class="label">Username</label>
-										<div class="control has-icons-left">
-											<input id="username" name="username" type="text" placeholder="e.g. gymdude99" class="input" required>
-											<span class="icon is-small is-left">
-												<i class="fa fa-user"></i>
-											</span>
-										</div>
-									</div>
-									<div class="field">
-										<label for="" class="label">Email</label>
-										<div class="control has-icons-left">
-											<input id="email" name="email" type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
-											<span class="icon is-small is-left">
-												<i class="fa fa-envelope"></i>
-											</span>
-										</div>
-									</div>
-									<div class="field">
-										<label for="" class="label">Password</label>
-										<div class="control has-icons-left">
-											<input id="password" name="password" type="password" placeholder="*******" class="input" required>
-											<span class="icon is-small is-left">
-												<i class="fa fa-lock"></i>
-											</span>
-										</div>
-									</div>
-									<div class="field">
-										<button class="button is-success">
-											Sign up
-										</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+{% block form %}
+	<div class="field">
+		<label for="" class="label">Username</label>
+		<div class="control has-icons-left">
+			<input id="username" name="username" type="text" placeholder="e.g. gymdude99" class="input" required>
+			<span class="icon is-small is-left">
+				<i class="fa fa-user"></i>
+			</span>
 		</div>
+	</div>
+	<div class="field">
+		<label for="" class="label">Email</label>
+		<div class="control has-icons-left">
+			<input id="email" name="email" type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+			<span class="icon is-small is-left">
+				<i class="fa fa-envelope"></i>
+			</span>
+		</div>
+	</div>
+	<div class="field">
+		<label for="" class="label">Password</label>
+		<div class="control has-icons-left">
+			<input id="password" name="password" type="password" placeholder="*******" class="input" required>
+			<span class="icon is-small is-left">
+				<i class="fa fa-lock"></i>
+			</span>
+		</div>
+	</div>
+	<div class="field">
+		<button class="button is-success">
+			Sign up
+		</button>
 	</div>
 {% endblock %}

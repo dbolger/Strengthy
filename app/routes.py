@@ -28,8 +28,7 @@ def login():
             login_user(user)
             return redirect(url_for('home'))
         else:
-            flash("invalid login")
-            return redirect(url_for('register'))
+            flash("Invalid username or password", "danger")
 
     return render_template('user/login.html', form=form)
 
@@ -46,8 +45,6 @@ def register():
     password = form.password.data
     email = form.email.data
 
-    print("register")
-
     if form.validate_on_submit():
         # Valid submission
         user = User.query.filter_by(username=username).first()
@@ -56,8 +53,9 @@ def register():
             user = User(username, password, email)
             db.session.add(user)
             db.session.commit()
+            return redirect(url_for('login'))
+        else:
+            flash("User already exists", "danger")
 
-        return redirect(url_for('login'))
-    else:
-        return render_template('user/register.html', form=form)
+    return render_template('user/register.html', form=form)
 

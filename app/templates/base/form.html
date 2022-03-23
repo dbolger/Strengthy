@@ -1,0 +1,33 @@
+{% extends 'base/layout.html' %}
+
+{% block content %}
+	<div class="form">
+		<section class="hero is-primary is-fullheight-with-navbar">
+			<div class="hero-body">
+				<div class="container">
+					<div class="columns is-centered">
+						<div class="column is-5-tablet is-4-desktop is-3-widescreen">
+							<h1 class="title is-2">{% block title %}{% endblock %}</h1>
+
+							<!-- TODO: render errors -->
+							{% with messages = get_flashed_messages(with_categories=true) %}
+								{% if messages %}
+									{% for category, message in messages %}
+										<div class="notification is-{{ category }}">
+											{{ message }}
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% endwith %}
+
+							<form method="POST" class="box">
+								{{ form.csrf_token }}
+								{% block form %}{% endblock %}
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}
