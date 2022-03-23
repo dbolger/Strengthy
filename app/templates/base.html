@@ -47,19 +47,21 @@
 				</div>
 			</div>
 
-			<!-- TODO: change based on login state -->
 			<div class="navbar-end">
 				<div class="navbar-item">
 					<div class="buttons">
-						<a class="button is-primary" href="register"><strong>Sign up</strong></a>
-						<a class="button is-light" href="login">Log in</a>
+						{% if current_user.is_authenticated %}
+							<a class="button is-light" href="/logout">Log Out</a>
+						{% else %}
+							<a class="button is-primary" href="/register"><strong>Sign Up</strong></a>
+							<a class="button is-light" href="/login">Log In</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 		</div>
 	</nav>
 
-	<!-- Actual content -->
 	{% block content %}{% endblock %}
 
 	<!-- TODO: footer -->

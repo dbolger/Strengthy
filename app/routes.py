@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 from forms import LoginForm, RegisterForm
 from tables.user import User
 
@@ -9,6 +9,7 @@ def index():
     return render_template('base/index.html')
 
 @app.route("/home", methods=["GET"])
+@login_required
 def home():
     return render_template('base/home.html')
 
@@ -32,6 +33,11 @@ def login():
 
     return render_template('user/login.html', form=form)
 
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    return redirect('/')
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -54,3 +60,4 @@ def register():
         return redirect(url_for('login'))
     else:
         return render_template('user/register.html', form=form)
+
