@@ -59,3 +59,7 @@ def register():
 
     return render_template('user/register.html', form=form)
 
+@app.route("/workout/create", methods=['GET', 'POST'])
+def createWorkout():
+    form = RegisterForm()
+    return render_template('workout/create.html', form=form)

@@ -1,0 +1,65 @@
+{% extends 'base/form.html' %}
+
+{% block title %}Create A Workout{% endblock %}
+
+{% block form %}
+<div class="field is-horizontal">
+    <div class="field-body">
+        <div class="field">
+            <p class="control is-expanded has-icons-left">
+            <input class="input" type="text" placeholder="Workout Name">
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="field is-horizontal">
+    <div class="field-body">
+        <div class="field">
+            <p class="control is-expanded has-icons-left">
+            <input class="input" type="text" placeholder="Exercise Name">
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control is-expanded has-icons-left has-icons-right">
+            <input class="input" type="number" placeholder="Reps" min="1" max="100">
+            <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+            </span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="field is-grouped is-grouped-right">
+    <p class="control">
+    <a class="button is-primary">
+        +
+    </a>
+    </p>
+    <p class="control">
+    <a class="button is-danger">
+        ✖
+    </a>
+    </p>
+</div>
+<div class="field is-grouped is-grouped-right">
+    <p class="control">
+    <a class="button is-primary">
+        Create Workout
+    </a>
+    </p>
+    <p class="control">
+    <a class="button is-danger">
+        Cancel
+    </a>
+    </p>
+</div>
+{% endblock %}
