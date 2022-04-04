@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Setup flask-login
 login_manager = LoginManager(app)
 login_manager.init_app(app)
+login_manager.login_view = "/login"
 
 # Setup SQLAlchemy
 # https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/#a-minimal-application

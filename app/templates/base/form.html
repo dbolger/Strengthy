@@ -13,9 +13,13 @@
                         {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                         {% for category, message in messages %}
-                        <div class="notification is-{{ category }}">
-                            {{ message }}
-                        </div>
+							{% if category == "message" %}
+								<div class="notification is-info">
+							{% else %}
+								<div class="notification is-{{ category }}">
+							{% endif %}
+								{{ message }}
+							</div>
                         {% endfor %}
                         {% endif %}
                         {% endwith %}
