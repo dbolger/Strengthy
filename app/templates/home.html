@@ -60,13 +60,21 @@
 									<tr>
 										<td>{{ workout.name }}</td>
 										<td>{{ workout.exercises.count() }} exercises</td>
-										<td class="level-right"><a class="button is-small is-primary" href="#">Edit</a></td>
+										<td class="level-right">
+											<p class="buttons">
+												<a class="button is-small is-primary" href="/workout/edit?id={{ workout.id }}">Edit</a>
+												<a class="button is-small is-danger" href="#">Delete</a>
+											</p>
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
 						</table>
 					</div>
 				</div>
+				<footer class="card-footer">
+					<a href="/workout/create" class="card-footer-item">Create New</a>
+				</footer>
 			</div>
 		</div>
 		<div class="column is-6">

@@ -10,3 +10,7 @@
 	-o-background-size: cover;
 	background-size: cover;
 }
+
+.welcome {
+	background: linear-gradient(to right, #5B86E5, #36D1DC);
+}

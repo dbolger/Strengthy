@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_user, login_required, logout_user
 from forms import LoginForm, RegisterForm, WorkoutCreateForm
 from tables import User, Workout
@@ -80,7 +80,34 @@ def createWorkout():
 
     return render_template('workout/create.html', form=form)
 
-@app.route("/workout/manage", methods=['GET'])
+@app.route("/workout/edit", methods=['GET', 'POST'])
 @login_required
-def manageWorkout():
-    return render_template('workout/manage.html')
+def editWorkout():
+    # Id is required
+    if 'id' not in request.args:
+        return redirect(url_for('home'))
+
+    # Validate Id
+    workout = Workout.query.filter_by(id=int(request.args['id']), user_id=current_user.id).first()
+    if not workout:
+        return redirect(url_for('home'))
+
+    form = WorkoutCreateForm()
+
+    if form.validate_on_submit():
+        # Form has been submitted, write changes
+
+        workout.name = form.name.data
+        # TODO: Add exercise changes
+
+        # Write changes to database
+        db.session.commit()
+        return redirect(url_for('home'));
+    else:
+        form.name.data = workout.name
+        form.exercises.pop_entry() # TODO: better way to do this?
+
+        for exercise in workout.exercises:
+            form.exercises.append_entry(exercise)
+
+    return render_template('workout/create.html', form=form)

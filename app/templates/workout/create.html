@@ -7,7 +7,7 @@
 	<div class="field-body">
 		<div class="field">
 			<p class="control is-expanded has-icons-left">
-			<input class="input" name="name" type="text" placeholder="Workout Name">
+			<input class="input" name="name" type="text" placeholder="Workout Name", value="{{ form.name.data or "" }}">
 			<span class="icon is-small is-left">
 				<i class="fa fa-tag"></i>
 			</span>
@@ -16,39 +16,41 @@
 	</div>
 </div>
 <div id="rows" class="field">
-	<div class="field is-horizontal">
-		<div class="field-body">
-			<div class="field">
-				<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-name' type="text" placeholder="Exercise Name">
-					<span class="icon is-small is-left">
-						<i class="fa fa-tag"></i>
+	{% for entry in form.exercises.entries %}
+		<div class="field is-horizontal">
+			<div class="field-body">
+				<div class="field">
+					<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercises-0-name' type="text" placeholder="Exercise Name", value="{{ entry.data['name'] or "" }}">
+						<span class="icon is-small is-left">
+							<i class="fa fa-tag"></i>
+						</span>
+					</p>
+				</div>
+				<div class="field">
+					<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercises-0-sets' type="number" placeholder="Sets" min="1" max="100" value="{{ entry.data['sets'] or "" }}">
+						<span class="icon is-small is-left">
+							<i class="fa fa-calculator"></i>
+						</span>
+					</p>
+				</div>
+				<div class="field">
+					<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercises-0-reps' type="number" placeholder="Reps" min="1" max="100" value="{{ entry.data['reps'] or "" }}">
+						<span class="icon is-small is-left">
+							<i class="fa fa-calculator"></i>
+						</span>
+					</p>
+				</div>
+				<p class="button is-danger" onclick="handleDel(this)">
+					<span class="icon is-small">
+						<i class="fa fa-minus"></i>
 					</span>
 				</p>
 			</div>
-			<div class="field">
-				<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-sets' type="number" placeholder="Sets" min="1" max="100">
-					<span class="icon is-small is-left">
-						<i class="fa fa-calculator"></i>
-					</span>
-				</p>
-			</div>
-			<div class="field">
-				<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-reps' type="number" placeholder="Reps" min="1" max="100">
-					<span class="icon is-small is-left">
-						<i class="fa fa-calculator"></i>
-					</span>
-				</p>
-			</div>
-			<p class="button is-danger" onclick="handleDel(this)">
-				<span class="icon is-small">
-					<i class="fa fa-minus"></i>
-				</span>
-			</p>
 		</div>
-	</div>
+	{% endfor %}
 </div>
 <div class="field is-grouped is-grouped-right">
 	<p class="buttons">
@@ -69,12 +71,11 @@
 </div>
 
 <script>
-	var rowId = 0;
+	var rowId = {{ form.exercises.entries | length }};
 
 	function handleAdd() {
 		rowsDiv = document.getElementById("rows");
 		newRow = rowsDiv.children[0].cloneNode(true);
-		rowId++;
 
 		exerciseNameInput = newRow.children[0].children[0].children[0].children[0];
 		exerciseNameInput.value = '';
@@ -88,6 +89,7 @@
 		exerciseRepInput.value = '';
 		exerciseRepInput.name = 'exercises-' + rowId + '-reps';
 
+		rowId++;
 		rowsDiv.append(newRow);
 	}
 
