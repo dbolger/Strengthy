@@ -18,65 +18,86 @@
 	<title>Strenghty 💪</title>
 </head>
 <body>
-	<!-- navbar -->
-	<nav class="navbar" role="navigation" aria-label="main navigation">
-		<div class="navbar-brand">
-			<a class="navbar-item">
-				<img src="/static/favicon/apple-touch-icon.png">
-			</a>
-			</div>
-
-			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-				<span aria-hidden="true"></span>
-				<span aria-hidden="true"></span>
-				<span aria-hidden="true"></span>
-			</a>
-		</div>
-
-		<div class="navbar-menu">
-			<div class="navbar-start">
-				{% if current_user.is_authenticated %}
-					<a href="/home" class="navbar-item">
-						Home
+	<section class="hero is-info is-fullheight gym-background">
+		<div class="hero-head">
+			<nav class="navbar">
+				<div class="navbar-brand">
+					<a class="navbar-item" href="../">
+						<img src="/static/favicon/apple-touch-icon.png" alt="Logo">
 					</a>
-
-					<a href="workout/create" class="navbar-item">
-						Record a Workout
-					</a>
-
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link">
-							Manage Workouts
-						</a>
-
-						<div class="navbar-dropdown">
-							<a class="navbar-item">
-								Create New Workout
-							</a>
-						</div>
-					</div>
-				{% endif %}
-
-				<!-- TODO: divider and list workouts -->
+					<span class="navbar-burger burger" data-target="navbarMenu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
 				</div>
-			</div>
 
-			<div class="navbar-end">
-				<div class="navbar-item">
-					<div class="buttons">
+				<div class="navbar-menu">
+					<div class="navbar-start">
 						{% if current_user.is_authenticated %}
-							<a class="button is-light" href="/logout">Log Out</a>
+							<span class="navbar-item">
+								<a class="button is-white is-outlined" href="/home">
+									<span class="icon">
+										<i class="fa fa-home"></i>
+									</span>
+									<span>Home</span>
+								</a>
+							</span>
+
+							<span class="navbar-item">
+								<a class="button is-white is-outlined" href="#">
+									<span class="icon">
+										<i class="fa fa-pencil"></i>
+									</span>
+									<span>Record a Workout</span>
+								</a>
+							</span>
+
+							<span class="navbar-item">
+								<a class="button is-white is-outlined" href="#">
+									<span class="icon">
+										<i class="fa fa-file-pen"></i>
+									</span>
+									<span>Manage Workouts</span>
+								</a>
+							</span>
+						{% endif %}
+					</div>
+
+					<div class="navbar-end">
+						{% if current_user.is_authenticated %}
+							<span class="navbar-item">
+								<a class="button is-white is-outlined" href="/logout">
+									<span>Log Out</span>
+								</a>
+							</span>
 						{% else %}
-							<a class="button is-primary" href="/register"><strong>Sign Up</strong></a>
-							<a class="button is-light" href="/login">Log In</a>
+							<span class="navbar-item">
+								<a class="button is-white is-outlined" href="/login">
+									<span class="icon">
+										<i class="fa fa-user"></i>
+									</span>
+									<span>Login</span>
+								</a>
+							</span>
+							<span class="navbar-item">
+								<a class="button is-white is-outlined" href="/register">
+									<span class="icon">
+										<i class="fa fa-pencil"></i>
+									</span>
+									<span>Sign Up</span>
+								</a>
+							</span>
 						{% endif %}
 					</div>
 				</div>
-			</div>
+			</nav>
 		</div>
-	</nav>
 
-	{% block content %}{% endblock %}
+		<div class="hero-body">
+			{% block content %}{% endblock %}
+		</div>
+	</section>
 
 	<!-- TODO: footer -->
 </body>

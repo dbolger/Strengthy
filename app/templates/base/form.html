@@ -1,37 +1,31 @@
 {% extends 'base/layout.html' %}
 
 {% block content %}
-<div class="form">
-	<section class="hero is-primary is-fullheight-with-navbar gym-background">
-		<div class="hero-body">
-			<div class="container">
-				<div class="columns is-centered">
-					<div class="column {{ column_classes }}">
-						<h1 class="title is-2">{% block title %}{% endblock %}</h1>
+	<div class="container">
+		<div class="columns is-centered">
+			<div class="column {{ column_classes }}">
+				<h1 class="title is-2">{% block title %}{% endblock %}</h1>
 
-						<!-- TODO: render errors -->
-						{% with messages = get_flashed_messages(with_categories=true) %}
-						{% if messages %}
-						{% for category, message in messages %}
-							{% if category == "message" %}
-								<div class="notification is-info">
-							{% else %}
-								<div class="notification is-{{ category }}">
-							{% endif %}
-								{{ message }}
-							</div>
-						{% endfor %}
-						{% endif %}
-						{% endwith %}
-
-						<form method="POST" class="box">
-							{{ form.csrf_token }}
-							{% block form %}{% endblock %}
-						</form>
+				<!-- TODO: render errors -->
+				{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+				{% for category, message in messages %}
+					{% if category == "message" %}
+						<div class="notification is-info">
+					{% else %}
+						<div class="notification is-{{ category }}">
+					{% endif %}
+						{{ message }}
 					</div>
-				</div>
+				{% endfor %}
+				{% endif %}
+				{% endwith %}
+
+				<form method="POST" class="box">
+					{{ form.csrf_token }}
+					{% block form %}{% endblock %}
+				</form>
 			</div>
 		</div>
-	</section>
-</div>
+	</div>
 {% endblock %}
