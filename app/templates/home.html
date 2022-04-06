@@ -148,12 +148,7 @@
 	<div class="columns">
 		<div class="column is-4">
 			<div class="card">
-				<div class="card-content">
-					<p class="title">
-						FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER
-						FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER
-					</p>
-				</div>
+				<canvas id="chart-1"></canvas>
 				<footer class="card-footer">
 					<p class="card-footer-item">
 						<span>
@@ -199,5 +194,32 @@
 		</div>
 	</div>
 </div>
+<script>
 
+const ctx = document.getElementById('chart-1');
+const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['01/01/22', '01/02/22', '02/01/22', '03/01/22', '04/01/22', '05/01/22', '06/01/22', '07/01/22'],
+        datasets: [{
+            label: 'Bench Press',
+            data: [125, 145, 185, 185, 200, 205, 205],
+            borderWidth: 1,
+			cubicInterpolationMode: 'monotone',
+			tension: 0.4,
+			pointStyle: 'circle',
+			pointRadius: 5,
+			pointHoverRadius: 10
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
 {% endblock %}
