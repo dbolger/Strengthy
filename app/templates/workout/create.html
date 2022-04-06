@@ -7,7 +7,7 @@
 	<div class="field-body">
 		<div class="field">
 			<p class="control is-expanded has-icons-left">
-			<input class="input" type="text" placeholder="Workout Name">
+			<input class="input" name="name" type="text" placeholder="Workout Name">
 			<span class="icon is-small is-left">
 				<i class="fa fa-tag"></i>
 			</span>
@@ -20,7 +20,7 @@
 		<div class="field-body">
 			<div class="field">
 				<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercise-0' type="text" placeholder="Exercise Name">
+					<input class="input" name='exercises-0-name' type="text" placeholder="Exercise Name">
 					<span class="icon is-small is-left">
 						<i class="fa fa-tag"></i>
 					</span>
@@ -28,7 +28,15 @@
 			</div>
 			<div class="field">
 				<p class="control is-expanded has-icons-left">
-					<input class="input" name='reps-0' type="number" placeholder="Reps" min="1" max="100">
+					<input class="input" name='exercises-0-sets' type="number" placeholder="Sets" min="1" max="100">
+					<span class="icon is-small is-left">
+						<i class="fa fa-calculator"></i>
+					</span>
+				</p>
+			</div>
+			<div class="field">
+				<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercises-0-reps' type="number" placeholder="Reps" min="1" max="100">
 					<span class="icon is-small is-left">
 						<i class="fa fa-calculator"></i>
 					</span>
@@ -66,15 +74,19 @@
 	function handleAdd() {
 		rowsDiv = document.getElementById("rows");
 		newRow = rowsDiv.children[0].cloneNode(true);
-
 		rowId++;
+
 		exerciseNameInput = newRow.children[0].children[0].children[0].children[0];
 		exerciseNameInput.value = '';
-		exerciseNameInput.name = 'exercise-' + rowId;
+		exerciseNameInput.name = 'exercises-' + rowId + '-name';
 
-		exerciseRepInput = newRow.children[0].children[1].children[0].children[0];
+		exerciseSetInput = newRow.children[0].children[1].children[0].children[0];
+		exerciseSetInput.value = '';
+		exerciseSetInput.name = 'exercises-' + rowId + '-sets';
+
+		exerciseRepInput = newRow.children[0].children[2].children[0].children[0];
 		exerciseRepInput.value = '';
-		exerciseRepInput.name = 'reps-' + rowId;
+		exerciseRepInput.name = 'exercises-' + rowId + '-reps';
 
 		rowsDiv.append(newRow);
 	}

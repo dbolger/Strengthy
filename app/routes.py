@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, WorkoutCreateForm
 from tables.user import User
 
 @app.route("/", methods=["GET"])
@@ -62,5 +62,14 @@ def register():
 @app.route("/workout/create", methods=['GET', 'POST'])
 @login_required
 def createWorkout():
-    form = RegisterForm()
+    form = WorkoutCreateForm()
+
+    # Load data from form
+    print(form.name.data)
+    for entry in form.exercises.entries:
+        print(entry.data)
+
+    if form.validate_on_submit():
+        print("Valid")
+
     return render_template('workout/create.html', form=form)
