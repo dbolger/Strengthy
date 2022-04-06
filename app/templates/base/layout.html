@@ -24,34 +24,39 @@
 				<img src="/static/favicon/apple-touch-icon.png">
 			</a>
 			</div>
-	
+
 			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
 				<span aria-hidden="true"></span>
 				<span aria-hidden="true"></span>
 				<span aria-hidden="true"></span>
 			</a>
 		</div>
-	
+
 		<div class="navbar-menu">
 			<div class="navbar-start">
-				<a href="workout/create" class="navbar-item">
-					Start a Workout
-				</a>
-
-				<a href="user/progress" class="navbar-item">
-					Progress
-				</a>
-	
-				<div class="navbar-item has-dropdown is-hoverable">
-					<a class="navbar-link">
-						More
+				{% if current_user.is_authenticated %}
+					<a href="/home" class="navbar-item">
+						Home
 					</a>
-	
-					<div class="navbar-dropdown">
-						<a class="navbar-item">
-							TODO
+
+					<a href="workout/create" class="navbar-item">
+						Record a Workout
+					</a>
+
+					<div class="navbar-item has-dropdown is-hoverable">
+						<a class="navbar-link">
+							Manage Workouts
 						</a>
+
+						<div class="navbar-dropdown">
+							<a class="navbar-item">
+								Create New Workout
+							</a>
+						</div>
 					</div>
+				{% endif %}
+
+				<!-- TODO: divider and list workouts -->
 				</div>
 			</div>
 
