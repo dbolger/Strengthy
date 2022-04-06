@@ -78,7 +78,7 @@ def createWorkout():
         else:
             flash("Workout with this name already exists", "danger")
 
-    return render_template('workout/create.html', form=form)
+    return render_template('workout/create.html', form=form, title="Create a Workout")
 
 @app.route("/workout/edit", methods=['GET', 'POST'])
 @login_required
@@ -110,4 +110,4 @@ def editWorkout():
         for exercise in workout.exercises:
             form.exercises.append_entry(exercise)
 
-    return render_template('workout/create.html', form=form)
+    return render_template('workout/create.html', form=form, title=f'Edit Workout "{workout.name}"')
