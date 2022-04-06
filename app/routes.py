@@ -70,7 +70,7 @@ def createWorkout():
         workout = Workout.query.filter_by(user_id=current_user.id, name=name).first()
         if not workout:
             # TODO: add exercises
-            workout = Workout(current_user, name, None)
+            workout = Workout(current_user, name, [e.data for e in form.exercises.entries])
             db.session.add(workout)
             db.session.commit()
 
@@ -79,3 +79,8 @@ def createWorkout():
             flash("Workout with this name already exists", "danger")
 
     return render_template('workout/create.html', form=form)
+
+@app.route("/workout/manage", methods=['GET'])
+@login_required
+def manageWorkout():
+    return render_template('workout/manage.html')
