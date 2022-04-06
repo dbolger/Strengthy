@@ -4,88 +4,85 @@
 
 {% block form %}
 <div class="field is-horizontal">
-    <div class="field-body">
-        <div class="field">
-            <p class="control is-expanded has-icons-left">
-            <input class="input" type="text" placeholder="Workout Name">
-            <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-            </span>
-            </p>
-        </div>
-    </div>
+	<div class="field-body">
+		<div class="field">
+			<p class="control is-expanded has-icons-left">
+			<input class="input" type="text" placeholder="Workout Name">
+			<span class="icon is-small is-left">
+				<i class="fa fa-tag"></i>
+			</span>
+			</p>
+		</div>
+	</div>
 </div>
 <div id="rows" class="field">
-    <div class="field is-horizontal">
-        <div class="field-body">
-            <div class="field">
-                <p class="control is-expanded has-icons-left">
-                <input class="input" name='exercise-0' type="text" placeholder="Exercise Name">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="control is-expanded has-icons-left has-icons-right">
-                <input class="input" name='reps-0' type="number" placeholder="Reps" min="1" max="100">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-envelope"></i>
-                </span>
-                <span class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                </span>
-                </p>
-            </div>
-        </div>
-    </div>
+	<div class="field is-horizontal">
+		<div class="field-body">
+			<div class="field">
+				<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercise-0' type="text" placeholder="Exercise Name">
+					<span class="icon is-small is-left">
+						<i class="fa fa-tag"></i>
+					</span>
+				</p>
+			</div>
+			<div class="field">
+				<p class="control is-expanded has-icons-left">
+					<input class="input" name='reps-0' type="number" placeholder="Reps" min="1" max="100">
+					<span class="icon is-small is-left">
+						<i class="fa fa-calculator"></i>
+					</span>
+				</p>
+			</div>
+			<p class="button is-danger" onclick="handleDel(this)">
+				<span class="icon is-small">
+					<i class="fa fa-minus"></i>
+				</span>
+			</p>
+		</div>
+	</div>
 </div>
 <div class="field is-grouped is-grouped-right">
-    <p class="control">
-    <a id="add" class="button is-primary">
-        +
-    </a>
-    </p>
-    <p class="control">
-    <a id="del" class="button is-danger">
-        ✖
-    </a>
-    </p>
+	<p class="buttons">
+		<p id="add" class="button is-primary">
+			<span class="icon is-small">
+				<i class="fa fa-plus"></i>
+			</span>
+			<span>Add Exercise</span>
+		</p>
+
+		<button class="button is-success ">
+			<span class="icon is-small">
+				<i class="fa fa-check"></i>
+			</span>
+			<span>Create Workout</span>
+		</button>
+	</p>
 </div>
-<div class="field is-grouped is-grouped-right">
-    <p class="control">
-    <a class="button is-primary">
-        Create Workout
-    </a>
-    </p>
-    <p class="control">
-    <a href="../home.html" class="button is-danger">
-        Cancel
-    </a>
-    </p>
-</div>
+
 <script>
-    function handleAdd() {
-        rowsDiv = document.getElementById("rows");
-        defaultRow = rowsDiv.children[0];
-        newRow = defaultRow.cloneNode(true);
-        exerciseNameInput = newRow.children[0].children[0].children[0].children[0];
-        exerciseRepInput = newRow.children[0].children[1].children[0].children[0];
-        rowIndex = rowsDiv.childElementCount;
-        exerciseNameInput.value = '';
-        exerciseNameInput.name = 'exercise-' + rowIndex;
-        exerciseRepInput.value = '';
-        exerciseRepInput.name = 'reps-' + rowIndex;;
-        rowsDiv.append(newRow);
-    }
-    function handleDel() {
-       rowsDiv = document.getElementById("rows");
-       rowsCount = rowsDiv.children.length;
-       if (rowsCount > 1) {
-           rowsDiv.children[rowsCount-1].remove();
-       }
-    }
-    document.getElementById("add").onclick = handleAdd;
-    document.getElementById("del").onclick = handleDel;
+	var rowId = 0;
+
+	function handleAdd() {
+		rowsDiv = document.getElementById("rows");
+		newRow = rowsDiv.children[0].cloneNode(true);
+
+		rowId++;
+		exerciseNameInput = newRow.children[0].children[0].children[0].children[0];
+		exerciseNameInput.value = '';
+		exerciseNameInput.name = 'exercise-' + rowId;
+
+		exerciseRepInput = newRow.children[0].children[1].children[0].children[0];
+		exerciseRepInput.value = '';
+		exerciseRepInput.name = 'reps-' + rowId;
+
+		rowsDiv.append(newRow);
+	}
+
+	function handleDel(elem) {
+		// TODO: Make sure this isn't the last row
+		elem.parentNode.parentNode.remove();
+	}
+	document.getElementById("add").onclick = handleAdd;
 </script>
 {% endblock %}
