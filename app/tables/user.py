@@ -13,6 +13,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80))
     email = db.Column(db.String(120), unique=True, nullable=False)
 
+    workouts = db.relationship("Workout", backref='user', lazy='dynamic')
+
     def __init__(self, username, password, email):
         self.username = username
         self.password = generate_password_hash(password)

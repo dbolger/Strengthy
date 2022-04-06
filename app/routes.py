@@ -1,8 +1,8 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, login_required, logout_user
+from flask_login import current_user, login_user, login_required, logout_user
 from forms import LoginForm, RegisterForm, WorkoutCreateForm
-from tables.user import User
+from tables import User, Workout
 
 @app.route("/", methods=["GET"])
 def index():
@@ -63,13 +63,19 @@ def register():
 @login_required
 def createWorkout():
     form = WorkoutCreateForm()
-
-    # Load data from form
-    print(form.name.data)
-    for entry in form.exercises.entries:
-        print(entry.data)
+    name = form.name.data
 
     if form.validate_on_submit():
-        print("Valid")
+        # Make sure the user doesn't already have a workout with this name
+        workout = Workout.query.filter_by(user_id=current_user.id, name=name).first()
+        if not workout:
+            # TODO: add exercises
+            workout = Workout(current_user, name, None)
+            db.session.add(workout)
+            db.session.commit()
+
+            return redirect(url_for('home'));
+        else:
+            flash("Workout with this name already exists", "danger")
 
     return render_template('workout/create.html', form=form)
