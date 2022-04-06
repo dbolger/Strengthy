@@ -2,17 +2,17 @@
 
 {% block content %}
 <div class="form">
-    <section class="hero is-primary is-fullheight-with-navbar">
-        <div class="hero-body">
-            <div class="container">
-                <div class="columns is-centered">
-                    <div class="column {{ column_classes }}">
-                        <h1 class="title is-2">{% block title %}{% endblock %}</h1>
+	<section class="hero is-primary is-fullheight-with-navbar gym-background">
+		<div class="hero-body">
+			<div class="container">
+				<div class="columns is-centered">
+					<div class="column {{ column_classes }}">
+						<h1 class="title is-2">{% block title %}{% endblock %}</h1>
 
-                        <!-- TODO: render errors -->
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                        {% for category, message in messages %}
+						<!-- TODO: render errors -->
+						{% with messages = get_flashed_messages(with_categories=true) %}
+						{% if messages %}
+						{% for category, message in messages %}
 							{% if category == "message" %}
 								<div class="notification is-info">
 							{% else %}
@@ -20,18 +20,18 @@
 							{% endif %}
 								{{ message }}
 							</div>
-                        {% endfor %}
-                        {% endif %}
-                        {% endwith %}
+						{% endfor %}
+						{% endif %}
+						{% endwith %}
 
-                        <form method="POST" class="box">
-                            {{ form.csrf_token }}
-                            {% block form %}{% endblock %}
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+						<form method="POST" class="box">
+							{{ form.csrf_token }}
+							{% block form %}{% endblock %}
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>
 {% endblock %}
