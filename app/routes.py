@@ -111,3 +111,8 @@ def editWorkout():
             form.exercises.append_entry(exercise)
 
     return render_template('workout/create.html', form=form, title=f'Edit Workout "{workout.name}"')
+
+@app.route("/workout/record", methods=['GET'])
+@login_required
+def recordWorkout():
+    return render_template('workout/record.html')
