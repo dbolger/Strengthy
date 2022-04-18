@@ -50,22 +50,20 @@
 		</div>
 	{% endfor %}
 </div>
-<div class="field is-grouped is-grouped-right">
-	<p class="buttons">
-		<p id="add" class="button is-primary">
-			<span class="icon is-small">
-				<i class="fa fa-plus"></i>
-			</span>
-			<span>Add Exercise</span>
-		</p>
-
-		<button class="button is-success ">
-			<span class="icon is-small">
-				<i class="fa fa-check"></i>
-			</span>
-			<span>Create Workout</span>
-		</button>
-	</p>
+<div class="field is-horizontal is-grouped is-grouped-right">
+    <p id="add" class="button is-primary">
+    <span class="icon is-small">
+        <i class="fa fa-plus"></i>
+    </span>
+    </p>
+</div>
+<div class="field is-horizontal is-grouped is-grouped-right">
+    <button class="button is-success ">
+        <span class="icon is-small">
+            <i class="fa fa-check"></i>
+        </span>
+        <span>Create Workout</span>
+    </button>
 </div>
 
 <script>
@@ -92,8 +90,10 @@
 	}
 
 	function handleDel(elem) {
-		// TODO: Make sure this isn't the last row
-		elem.parentNode.parentNode.remove();
+        if (elem.parentNode.parentNode.parentNode.children.length > 1) {
+            console.log(elem.parentNode.parentNode.parentNode);
+            elem.parentNode.parentNode.remove();
+        }
 	}
 	document.getElementById("add").onclick = handleAdd;
 </script>

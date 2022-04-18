@@ -12,5 +12,7 @@
 }
 
 .welcome {
-	background: linear-gradient(to right, #5B86E5, #36D1DC);
+	background: linear-gradient(to right, #55F, #95F);
+    margin-bottom: 16px;
+    border-radius: 6px;
 }
