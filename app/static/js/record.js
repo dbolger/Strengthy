@@ -1,13 +1,26 @@
-
 // Register 'Enter' listeners on all inputs
-Array.from(document.getElementsByClassName('input'))
-	.filter(e => e.type == 'number')
-	.forEach(e => e.addEventListener('keyup', function(event) {
-		if (event.key == 'Enter') {
-			// TODO implement
-			console.log("ENTER")
-		}
-	}))
+allInputs = Array.from(document.getElementsByClassName('input'))
+	.filter(e => e.type == 'number');
+allInputs.forEach(e => e.addEventListener('keypress', handleEnterKey));
+
+function handleEnterKey(event) {
+
+	// add ids to each input programatically
+
+	if (event.key = 'Enter') {
+		event.preventDefault();
+
+		//Isolate the node that we're after
+		const currentNode = event.target;
+
+		//Find the current tab index.
+		currentIndex = [...allInputs].findIndex(el => currentNode.isEqualNode(el))
+
+		//focus the following element
+		const targetIndex = (currentIndex + 1) % allInputs.length;
+		allInputs[targetIndex].focus();}
+
+}
 
 function setReset(row, values=true) {
 	let lbsInput = row.children[1].children[0];

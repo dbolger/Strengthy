@@ -4,18 +4,21 @@
 <div class="continer">
 	<div class="columns is-centered">
 		{% for workout in current_user.workouts %}
-			<div class="column">
-				<div class="card">
-					<header class="card-header">
-						<p class="card-header-title"> {{ workout.name }}</p>
-					</header>
-					<div class="card-content">
-						<div class="content">
-							<a class="button" href="/workout/record?id={{ workout.id }}">Start</a>
-						</div>
+		<div class="column">
+			<div class="card">
+				<header class="card-header">
+					<p class="card-header-title"> {{ workout.name }}</p>
+				</header>
+				<div class="card-content">
+					<div class="content">
+						{% for exercise in workout.exercises %}
+						<p>{{ exercise.sets }} x {{ exercise.units }} x {{ exercise.name }}</p>
+						{% endfor %}
+						<a class="button" href="/workout/record?id={{ workout.id }}">Start</a>
 					</div>
 				</div>
 			</div>
+		</div>
 		{% endfor %}
 	</div>
 </div>
