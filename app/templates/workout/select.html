@@ -1,0 +1,23 @@
+{% extends 'base/layout.html' %}
+
+{% block content %}
+<div class="continer">
+	<div class="columns is-centered">
+		{% for workout in current_user.workouts %}
+			<div class="column">
+				<div class="card">
+					<header class="card-header">
+						<p class="card-header-title"> {{ workout.name }}</p>
+					</header>
+					<div class="card-content">
+						<div class="content">
+							<a class="button" href="/workout/record?id={{ workout.id }}">Start</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

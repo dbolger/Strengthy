@@ -1,37 +1,48 @@
-{% extends 'base/layout.html' %}
+{% extends 'base/form.html' %}
 
-{% block content %}
+{% block title %}Record {{ workout.name }}{% endblock %}
 
-<div class="continer">
-	<div class="columns is-centered">
-		<div class="column">
-			<h1 class="title is-2">Leg Day</h1>
-			<div class="box">
-				<div class="tabs is-fullwidth">
-				  <ul>
-				    <li>
-				      <a>
-				        <span class="icon"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
-				        <span>Left</span>
-				      </a>
-				    </li>
-				    <li>
-				      <a>
-				        <span class="icon"><i class="fas fa-angle-up" aria-hidden="true"></i></span>
-				        <span>Up</span>
-				      </a>
-				    </li>
-				    <li>
-				      <a>
-				        <span>Right</span>
-				        <span class="icon"><i class="fas fa-angle-right" aria-hidden="true"></i></span>
-				      </a>
-				    </li>
-				  </ul>
-				</div>
-			</div>
-		</div>
+{% block form %}
+{% for exercise in workout.exercises %}
+<div>
+	<h1 id="{{ exercise.name }}" class="title is-4 has-text-black">{{ exercise.name }}</h1>
+	<table class="table is-fullwidth is-hoverable">
+		<thead>
+			<th>Set</th>
+			<th>lbs</th>
+			<th>Reps</th>
+			<th>Done</th>
+		</thead>
+		<tbody>
+			{% for i in range(exercise.sets) %}
+				<tr>
+					<th>{{ i + 1 }}</th>
+					<td><input class="input" type="number"></td>
+					<td><input class="input" type="number"></td>
+					<td>
+						<a class="button" onClick="onClickSetCheck(this)">
+							<span class="icon is-small">
+								<i class="fa fa-check"></i>
+							</span>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="buttons is-centered">
+		<a class="button is-primary" onClick="onClickAddSet(this)">
+			<span class="icon is-small">
+				<i class="fa fa-plus"></i>
+			</span>
+			<span>Add Set</span>
+		</a>
+		<a class="button is-danger">Skip</a>
 	</div>
+	<hr>
 </div>
+{% endfor %}
+
+<script async type="text/javascript" src="/static/js/record.js"></script>
 
 {% endblock %}
