@@ -6,17 +6,17 @@ class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     sets = db.Column(db.Integer)
-    reps = db.Column(db.Integer)
+    units = db.Column(db.Integer)
     # Workout Relationship
     workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
 
-    def __init__(self, name, sets, reps):
+    def __init__(self, name, sets, units):
         self.name = name
         self.sets = sets
-        self.reps = reps
+        self.unit = units 
 
     def __repr__(self):
-        return f'<Exercise {self.name} {self.sets}x{self.reps}>'
+        return f'<Exercise {self.name} {self.sets}x{self.units}>'
 
 # Represents a singular workout
 class Workout(db.Model):
@@ -34,7 +34,7 @@ class Workout(db.Model):
 
         # Create exercises
         for exercise in exercises:
-            self.exercises.append(Exercise(exercise['name'], exercise['sets'], exercise['reps']))
+            self.exercises.append(Exercise(exercise['name'], exercise['sets'], exercise['units']))
 
     def __repr__(self):
         return f'<Workout {self.name}>'

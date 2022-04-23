@@ -1,12 +1,12 @@
 from app import app, db
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_required
-from forms import LoginForm, RegisterForm, WorkoutCreateForm
+from forms import WorkoutCreateForm, WorkoutRecordForm
 from tables import User, Workout
 
 @app.route("/workout/create", methods=['GET', 'POST'])
 @login_required
-def createWorkout():
+def workout_create():
     form = WorkoutCreateForm()
     name = form.name.data
 
@@ -23,11 +23,11 @@ def createWorkout():
         else:
             flash("Workout with this name already exists", "danger")
 
-    return render_template('workout/create.html', form=form, title="Create a Workout")
+    return render_template('workout/create.html', form=form)
 
 @app.route("/workout/edit", methods=['GET', 'POST'])
 @login_required
-def editWorkout():
+def workout_edit():
     # Id is required
     if 'id' not in request.args:
         return redirect(url_for('home'))
@@ -57,9 +57,11 @@ def editWorkout():
 
     return render_template('workout/create.html', form=form, title=f'Edit Workout "{workout.name}"')
 
-@app.route("/workout/record", methods=['GET'])
+@app.route("/workout/record", methods=['GET', 'POST'])
 @login_required
-def recordWorkout():
+def workout_record():
+    form = WorkoutRecordForm()
+
     # Id is required
     if 'id' not in request.args:
         return redirect(url_for('home'))
@@ -69,9 +71,12 @@ def recordWorkout():
     if not workout:
         return redirect(url_for('home'));
 
-    return render_template('workout/record.html', workout=workout, form=None)
+    if form.validate_on_submit():
+        print(form)
+
+    return render_template('workout/record.html', workout=workout, form=form)
 
 @app.route("/workout/select", methods=['GET'])
 @login_required
-def selectWorkout():
+def workout_select():
     return render_template('workout/select.html')
