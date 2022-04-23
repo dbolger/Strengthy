@@ -18,7 +18,9 @@ function handleAdd() {
 	exerciseUnitInput.placeholder = 'Reps';
 	exerciseUnitInput.name = 'exercises-' + rowId + '-units';
 
-	exerciseUnitInput.parentNode.children[0].children[0].children[0].addEventListener("input", handleChange);
+	exerciseUnitSelect = exerciseUnitInput.parentNode.children[0].children[0].children[0];
+	exerciseUnitSelect.addEventListener("input", handleChange);
+	exerciseUnitSelect.name = 'exercises-' + rowId + '-type';
 
 	rowId++;
 	rowsDiv.append(newRow);

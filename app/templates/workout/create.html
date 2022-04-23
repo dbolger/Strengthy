@@ -1,5 +1,7 @@
 {% extends 'base/form.html' %}
 
+{% block title %}Create Workout{% endblock %}
+
 {% block form %}
 <div class="field is-horizontal">
 	<div class="field-body">
@@ -12,67 +14,73 @@
 		</div>
 	</div>
 </div>
-<div id="rows" class="field"> {% for entry in form.exercises.entries %} <div class="field is-horizontal">
-			<div class="field-body">
-				<div class="field">
-					<p class="control is-expanded has-icons-left">
+
+<div id="rows" class="field">
+	{% for entry in form.exercises.entries %}
+	<div class="field is-horizontal">
+		<div class="field-body">
+			<div class="field">
+				<p class="control is-expanded has-icons-left">
 					<input class="input" name='exercises-0-name' type="text" placeholder="Exercise Name", value="{{ entry.data['name'] or "" }}">
-						<span class="icon is-small is-left">
-							<i class="fa fa-tag"></i>
-						</span>
-					</p>
-					<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-reps' type="hidden" placeholder="Reps" min="1" max="100" value="{{ entry.data['reps'] or "" }}">
-						<span class="icon is-small is-left">
-							<i class="fa"></i>
-						</span>
-					</p>
-				</div>
-				<div class="field">
-					<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-sets' type="number" placeholder="Sets" min="1" max="100" value="{{ entry.data['sets'] or "" }}">
-						<span class="icon is-small is-left">
-							<i class="fa fa-calculator"></i>
-						</span>
-					</p>
-				</div>
-				<div class="field has-addons">
-                    <div class="control has-icons-left">
-                        <div class="select">
-                            <select class="exercise-unit">
-                                <option value="reps">Reps</option>
-                                <option value="time">Time</option>
-                            </select>
-                        </div>
-                        <div class="icon is-small is-left">
-                            <i class="fa fa-calculator"></i>
-                        </div>
-                    </div>
-					<input class="input" name='exercises-0-units' type="number" placeholder="Reps" min="1" max="100" value="{{ entry.data['reps'] or "" }}">
-				</div>
-                <p class="button is-danger" onclick="handleDel(this)">
-                    <span class="icon is-small">
-                        <i class="fa fa-minus"></i>
-                    </span>
-                </p>
+					<span class="icon is-small is-left">
+						<i class="fa fa-tag"></i>
+					</span>
+				</p>
+				<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercises-0-reps' type="hidden" placeholder="Reps" min="1" value="{{ entry.data['reps'] or "" }}">
+					<span class="icon is-small is-left">
+						<i class="fa"></i>
+					</span>
+				</p>
 			</div>
+			<div class="field">
+				<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercises-0-sets' type="number" placeholder="Sets" min="1" value="{{ entry.data['sets'] or "" }}">
+					<span class="icon is-small is-left">
+						<i class="fa fa-calculator"></i>
+					</span>
+				</p>
+			</div>
+			<div class="field has-addons">
+				 <div class="control has-icons-left">
+					<div class="select">
+						<select name="exercise-0-type">
+							<option value="reps">Reps</option>
+							<option value="time">Time</option>
+						</select>
+					</div>
+					<div class="icon is-small is-left">
+						<i class="fa fa-calculator"></i>
+					</div>
+				</div>
+				<input class="input" name='exercises-0-units' type="number" placeholder="Reps" min="1" value="{{ entry.data['units'] or "" }}">
+			</div>
+			<p class="button is-danger" onclick="handleDel(this)">
+				<span class="icon is-small">
+					<i class="fa fa-minus"></i>
+				</span>
+			</p>
 		</div>
+	</div>
 	{% endfor %}
 </div>
+
 <div class="field is-horizontal is-grouped is-grouped-right">
-    <p id="add" class="button is-primary">
-    <span class="icon is-small">
-        <i class="fa fa-plus"></i>
-    </span>
-    </p>
+	<p id="add" class="button is-primary">
+		<span class="icon is-small">
+			<i class="fa fa-plus"></i>
+		</span>
+	</p>
 </div>
+
 <div class="field is-horizontal is-grouped is-grouped-right">
-    <button class="button is-success ">
-        <span class="icon is-small">
-            <i class="fa fa-check"></i>
-        </span>
-        <span>Create Workout</span>
-    </button>
+	<button class="button is-success ">
+		<span class="icon is-small">
+			<i class="fa fa-check"></i>
+		</span>
+		<span>Create Workout</span>
+	</button>
 </div>
-<script src="../../static/js/create.js"></script>
+
+<script src="/static/js/create.js"></script>
 {% endblock %}

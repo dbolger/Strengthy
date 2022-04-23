@@ -7,6 +7,7 @@ class ExerciseCreateForm(Form):
     name = StringField("name",  [DataRequired()])
     sets = IntegerField("sets", [DataRequired()])
     units = IntegerField("units", [DataRequired()])
+    type = StringField("type", [DataRequired()]) # TODO: make sure its time or reps
 
 class SetForm(Form):
     lbs = IntegerField("lbs", [DataRequired()])
