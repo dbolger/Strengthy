@@ -1,4 +1,5 @@
 from app import app, db
+from flask import render_template
 from flask_login import login_required
 
 @app.route("/", methods=["GET"])
