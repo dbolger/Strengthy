@@ -69,7 +69,7 @@ def recordWorkout():
     if not workout:
         return redirect(url_for('home'));
 
-    return render_template('workout/record.html', workout=workout)
+    return render_template('workout/record.html', workout=workout, form=None)
 
 @app.route("/workout/select", methods=['GET'])
 @login_required
