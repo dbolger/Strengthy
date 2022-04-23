@@ -7,39 +7,41 @@
 			<h1 class="title is-2">Record {{ workout.name }}</h1>
 			<div class="box">
 				{% for exercise in workout.exercises %}
-					<h1 class="subtitle has-text-black">{{ exercise.name }}</h1>
-					<div class="field is-horizontal">
-						<div class="field-body">
-							<div class="field">
-								<label class="label">lbs</label>
-								<div class="control">
-									<input class="input" type="number" min="0">
-								</div>
-							</div>
-							<div class="field">
-								<label class="label">Reps</label>
-								<div class="control">
-									<input class="input" type="number" min="0">
-								</div>
-							</div>
-							<!-- TODO: fix align -->
-							<button class="button" onClick="onClickSetCheck(this)">
-								<span class="icon is-small">
-									<i class="fa fa-check"></i>
-								</span>
-							</button>
-						</div>
-					</div>
-
+					<h1 class="title is-4 has-text-black">{{ exercise.name }}</h1>
+					<table class="table is-fullwidth is-hoverable">
+						<thead>
+							<th>Set</th>
+							<th>lbs</th>
+							<th>Reps</th>
+							<th>Done</th>
+						</thead>
+						<tbody>
+							{% for i in range(exercise.sets) %}
+								<tr>
+									<th>{{ i }}</th>
+									<td><input class="input" type="number"></td>
+									<td><input class="input" type="number"></td>
+									<td>
+										<button class="button" onClick="onClickSetCheck(this)">
+											<span class="icon is-small">
+												<i class="fa fa-check"></i>
+											</span>
+										</button>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
 					<div class="buttons is-centered">
-							<button class="button is-primary">
-								<span class="icon is-small">
-									<i class="fa fa-plus"></i>
-								</span>
-								<span>Add Set</span>
-							</button>
-							<button class="button is-danger">Skip</button>
+						<button class="button is-primary">
+							<span class="icon is-small">
+								<i class="fa fa-plus"></i>
+							</span>
+							<span>Add Set</span>
+						</button>
+						<button class="button is-danger">Skip</button>
 					</div>
+					<hr>
 				{% endfor %}
 			</div>
 		</div>
