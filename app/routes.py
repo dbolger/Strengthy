@@ -116,3 +116,8 @@ def editWorkout():
 @login_required
 def recordWorkout():
     return render_template('workout/record.html')
+
+@app.route("/workout/select", methods=['GET'])
+@login_required
+def selectWorkout():
+    return render_template('workout/select.html')
