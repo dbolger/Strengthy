@@ -4,8 +4,7 @@
 <div class="field is-horizontal">
 	<div class="field-body">
 		<div class="field">
-			<p class="control is-expanded has-icons-left">
-			<input class="input" name="name" type="text" placeholder="Workout Name", value="{{ form.name.data or "" }}">
+			<p class="control is-expanded has-icons-left"> <input class="input" name="name" type="text" placeholder="Workout Name", value="{{ form.name.data or "" }}">
 			<span class="icon is-small is-left">
 				<i class="fa fa-tag"></i>
 			</span>
@@ -13,15 +12,19 @@
 		</div>
 	</div>
 </div>
-<div id="rows" class="field">
-	{% for entry in form.exercises.entries %}
-		<div class="field is-horizontal">
+<div id="rows" class="field"> {% for entry in form.exercises.entries %} <div class="field is-horizontal">
 			<div class="field-body">
 				<div class="field">
 					<p class="control is-expanded has-icons-left">
 					<input class="input" name='exercises-0-name' type="text" placeholder="Exercise Name", value="{{ entry.data['name'] or "" }}">
 						<span class="icon is-small is-left">
 							<i class="fa fa-tag"></i>
+						</span>
+					</p>
+					<p class="control is-expanded has-icons-left">
+					<input class="input" name='exercises-0-reps' type="hidden" placeholder="Reps" min="1" max="100" value="{{ entry.data['reps'] or "" }}">
+						<span class="icon is-small is-left">
+							<i class="fa"></i>
 						</span>
 					</p>
 				</div>
@@ -33,19 +36,25 @@
 						</span>
 					</p>
 				</div>
-				<div class="field">
-					<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-reps' type="number" placeholder="Reps" min="1" max="100" value="{{ entry.data['reps'] or "" }}">
-						<span class="icon is-small is-left">
-							<i class="fa fa-calculator"></i>
-						</span>
-					</p>
+				<div class="field has-addons">
+                    <div class="control has-icons-left">
+                        <div class="select">
+                            <select class="exercise-unit">
+                                <option value="reps">Reps</option>
+                                <option value="time">Time</option>
+                            </select>
+                        </div>
+                        <div class="icon is-small is-left">
+                            <i class="fa fa-calculator"></i>
+                        </div>
+                    </div>
+					<input class="input" name='exercises-0-units' type="number" placeholder="Reps" min="1" max="100" value="{{ entry.data['reps'] or "" }}">
 				</div>
-				<p class="button is-danger" onclick="handleDel(this)">
-					<span class="icon is-small">
-						<i class="fa fa-minus"></i>
-					</span>
-				</p>
+                <p class="button is-danger" onclick="handleDel(this)">
+                    <span class="icon is-small">
+                        <i class="fa fa-minus"></i>
+                    </span>
+                </p>
 			</div>
 		</div>
 	{% endfor %}
@@ -65,36 +74,5 @@
         <span>Create Workout</span>
     </button>
 </div>
-
-<script>
-	var rowId = {{ form.exercises.entries | length }};
-
-	function handleAdd() {
-		rowsDiv = document.getElementById("rows");
-		newRow = rowsDiv.children[0].cloneNode(true);
-
-		exerciseNameInput = newRow.children[0].children[0].children[0].children[0];
-		exerciseNameInput.value = '';
-		exerciseNameInput.name = 'exercises-' + rowId + '-name';
-
-		exerciseSetInput = newRow.children[0].children[1].children[0].children[0];
-		exerciseSetInput.value = '';
-		exerciseSetInput.name = 'exercises-' + rowId + '-sets';
-
-		exerciseRepInput = newRow.children[0].children[2].children[0].children[0];
-		exerciseRepInput.value = '';
-		exerciseRepInput.name = 'exercises-' + rowId + '-reps';
-
-		rowId++;
-		rowsDiv.append(newRow);
-	}
-
-	function handleDel(elem) {
-        if (elem.parentNode.parentNode.parentNode.children.length > 1) {
-            console.log(elem.parentNode.parentNode.parentNode);
-            elem.parentNode.parentNode.remove();
-        }
-	}
-	document.getElementById("add").onclick = handleAdd;
-</script>
+<script src="../../static/js/create.js"></script>
 {% endblock %}
