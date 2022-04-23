@@ -1,12 +1,49 @@
 {% extends 'base/layout.html' %}
 
 {% block content %}
-
-<div class="continer">
+<div class="container">
 	<div class="columns is-centered">
 		<div class="column">
-			<!--- TODO --->
-		<div>
+			<h1 class="title is-2">Record {{ workout.name }}</h1>
+			<div class="box">
+				{% for exercise in workout.exercises %}
+					<h1 class="subtitle has-text-black">{{ exercise.name }}</h1>
+					<div class="field is-horizontal">
+						<div class="field-body">
+							<div class="field">
+								<label class="label">lbs</label>
+								<div class="control">
+									<input class="input" type="number" min="0">
+								</div>
+							</div>
+							<div class="field">
+								<label class="label">Reps</label>
+								<div class="control">
+									<input class="input" type="number" min="0">
+								</div>
+							</div>
+
+							<!-- Done button -->
+							<p class="button">
+								<span class="icon is-small">
+									<i class="fa fa-check"></i>
+								</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="buttons is-centered">
+							<button class="button is-primary">
+								<span class="icon is-small">
+									<i class="fa fa-plus"></i>
+								</span>
+								<span>Add Set</span>
+							</button>
+							<button class="button is-danger">Skip</button>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 </div>
 

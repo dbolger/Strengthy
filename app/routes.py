@@ -115,7 +115,16 @@ def editWorkout():
 @app.route("/workout/record", methods=['GET'])
 @login_required
 def recordWorkout():
-    return render_template('workout/record.html')
+    # Id is required
+    if 'id' not in request.args:
+        return redirect(url_for('home'))
+
+    # Matching workout required
+    workout = Workout.query.filter_by(id=int(request.args['id']), user_id=current_user.id).first()
+    if not workout:
+        return redirect(url_for('home'));
+
+    return render_template('workout/record.html', workout=workout)
 
 @app.route("/workout/select", methods=['GET'])
 @login_required
