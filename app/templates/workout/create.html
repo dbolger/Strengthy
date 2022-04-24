@@ -18,6 +18,7 @@
 
 <div id="rows" class="field">
 	{% for entry in form.exercises.entries %}
+	{{ entry['id']() }}
 	<div class="field is-horizontal">
 		<div class="field-body">
 			<div class="field">

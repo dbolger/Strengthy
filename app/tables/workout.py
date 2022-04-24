@@ -2,11 +2,6 @@ from app import db, login_manager
 import enum
 
 
-class ExerciseType(enum.Enum):
-    TIME = "Seconds"
-    REPS = "Reps"
-
-
 # Represents an individual exercise
 class Exercise(db.Model):
     __tablename__ = "exercises"
@@ -14,7 +9,7 @@ class Exercise(db.Model):
     name = db.Column(db.String(100), nullable=False)
     sets = db.Column(db.Integer)
     units = db.Column(db.Integer)
-    type = db.Column(db.Enum(ExerciseType))
+    type = db.Column(db.Enum("reps", "time"), nullable=False)
     # Workout Relationship
     workout_id = db.Column(db.Integer, db.ForeignKey("workouts.id"))
 
@@ -42,15 +37,14 @@ class Workout(db.Model):
         self.name = name
         self.user_id = user.id
 
-        # Create exercises
         for exercise in exercises:
-            type = (
-                ExerciseType.TIME
-                if exercise["exercise_type"] == "time"
-                else ExerciseType.REPS
-            )
             self.exercises.append(
-                Exercise(exercise["name"], exercise["sets"], exercise["units"], type)
+                Exercise(
+                    exercise["name"],
+                    exercise["sets"],
+                    exercise["units"],
+                    exercise["type"],
+                )
             )
 
     def __repr__(self):

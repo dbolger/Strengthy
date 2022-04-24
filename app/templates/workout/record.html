@@ -4,6 +4,7 @@
 
 {% block form %}
 {% for exercise in workout.exercises %}
+{% set outer_loop = loop %}
 <div>
 	<h1 id="{{ exercise.name }}" class="title is-4 has-text-black">{{ exercise.name }}</h1>
 	<table class="table is-fullwidth is-hoverable">
@@ -17,8 +18,8 @@
 			{% for i in range(exercise.sets) %}
 				<tr>
 					<th>{{ i + 1 }}</th>
-					<td><input class="input" type="number"></td>
-					<td><input class="input" type="number"></td>
+					<td><input class="input" name="exercises-{{ outer_loop.index0 }}-sets-{{ i }}-lbs" type="number"></td>
+					<td><input class="input" name="exercises-{{ outer_loop.index0 }}-sets-{{ i }}-reps" type="number"></td>
 					<td>
 						<a class="button" onClick="onClickSetCheck(this)">
 							<span class="icon is-small">
@@ -41,6 +42,15 @@
 	<hr>
 </div>
 {% endfor %}
+
+<div class="field is-horizontal is-grouped is-grouped-right">
+	<button class="button is-success ">
+		<span class="icon is-small">
+			<i class="fa fa-check"></i>
+		</span>
+		<span>Finish Workout</span>
+	</button>
+</div>
 
 <script async type="text/javascript" src="/static/js/record.js"></script>
 

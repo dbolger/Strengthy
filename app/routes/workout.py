@@ -2,7 +2,7 @@ from app import app, db
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_required
 from forms import WorkoutCreateForm, WorkoutRecordForm
-from tables import User, Workout
+from tables import Exercise, User, Workout
 
 
 @app.route("/workout/create", methods=["GET", "POST"])
@@ -46,10 +46,23 @@ def workout_edit():
     form = WorkoutCreateForm()
 
     if form.validate_on_submit():
-        # Form has been submitted, write changes
+        # Form has been submitted, write changes FIXME
+        for entry in form.exercises.entries:
+            # Get the specified exercise TODO needs hidden id field
+            exercise = Exercise.query.filter_by(
+                workout_id=workout.id, id=int(entry.data["id"])
+            ).first()
 
-        workout.name = form.name.data
-        # TODO: Add exercise changes
+            if not exercise:  # NOTE error?
+                continue
+
+            # Update exercise
+            exercise.name = entry.data["name"]
+            exercise.sets = entry.data["sets"]
+            exercise.units = entry.data["units"]
+            exercise.type = entry.data["type"]
+
+            print(exercise)
 
         # Write changes to database
         db.session.commit()
@@ -83,6 +96,7 @@ def workout_record():
         return redirect(url_for("home"))
 
     if form.validate_on_submit():
+        # Form has been submitted and is valid FIXME
         print(form)
 
     return render_template("workout/record.html", workout=workout, form=form)

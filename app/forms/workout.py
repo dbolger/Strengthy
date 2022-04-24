@@ -1,11 +1,19 @@
 from flask_wtf import FlaskForm, Form
-from wtforms import FieldList, FormField, IntegerField, SelectField, StringField
+from wtforms import (
+    FieldList,
+    FormField,
+    HiddenField,
+    IntegerField,
+    SelectField,
+    StringField,
+)
 from wtforms.validators import DataRequired, Email
 
 # /workout/create
 class ExerciseCreateForm(Form):
     # TODO no exercise_*, breaks workout_edit endpoint
-    name = StringField("name", [DataRequired()], name="name")
+    id = HiddenField("id", [DataRequired()])
+    name = StringField("name", [DataRequired()])
     sets = IntegerField("sets", [DataRequired()])
     units = IntegerField("units", [DataRequired()])
     type = SelectField(
@@ -20,14 +28,13 @@ class WorkoutCreateForm(FlaskForm):
 
 #  /workout/record
 class SetForm(Form):
-    lbs = IntegerField("lbs", [DataRequired()])
-    reps = IntegerField("reps", [DataRequired()])
+    lbs = IntegerField("lbs")
+    reps = IntegerField("reps")
 
 
 class ExerciseRecordForm(Form):
     sets = FieldList(FormField(SetForm))
 
 
-# Actual forms
 class WorkoutRecordForm(FlaskForm):
     exercises = FieldList(FormField(ExerciseRecordForm))
