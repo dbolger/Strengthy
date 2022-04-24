@@ -4,10 +4,7 @@ allInputs = Array.from(document.getElementsByClassName('input'))
 allInputs.forEach(e => e.addEventListener('keypress', handleEnterKey));
 
 function handleEnterKey(event) {
-
-	// add ids to each input programatically
-
-	if (event.key = 'Enter') {
+	if (event.key === "Enter") {
 		event.preventDefault();
 
 		//Isolate the node that we're after

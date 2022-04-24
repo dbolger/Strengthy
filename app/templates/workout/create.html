@@ -6,10 +6,11 @@
 <div class="field is-horizontal">
 	<div class="field-body">
 		<div class="field">
-			<p class="control is-expanded has-icons-left"> <input class="input" name="name" type="text" placeholder="Workout Name", value="{{ form.name.data or "" }}">
-			<span class="icon is-small is-left">
-				<i class="fa fa-tag"></i>
-			</span>
+			<p class="control is-expanded has-icons-left">
+				{{ form.name(class_='input', placeholder='Workout Name') }}
+				<span class="icon is-small is-left">
+					<i class="fa fa-tag"></i>
+				</span>
 			</p>
 		</div>
 	</div>
@@ -21,13 +22,12 @@
 		<div class="field-body">
 			<div class="field">
 				<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-name' type="text" placeholder="Exercise Name", value="{{ entry.data['name'] or "" }}">
+					{{ entry.exercise_name(class_='input', placeholder='Name') }}
 					<span class="icon is-small is-left">
 						<i class="fa fa-tag"></i>
 					</span>
 				</p>
 				<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-reps' type="hidden" placeholder="Reps" min="1" value="{{ entry.data['reps'] or "" }}">
 					<span class="icon is-small is-left">
 						<i class="fa"></i>
 					</span>
@@ -35,7 +35,7 @@
 			</div>
 			<div class="field">
 				<p class="control is-expanded has-icons-left">
-					<input class="input" name='exercises-0-sets' type="number" placeholder="Sets" min="1" value="{{ entry.data['sets'] or "" }}">
+					{{ entry.sets(class_='input', placeholder='Sets') }}
 					<span class="icon is-small is-left">
 						<i class="fa fa-calculator"></i>
 					</span>
@@ -44,16 +44,13 @@
 			<div class="field has-addons">
 				 <div class="control has-icons-left">
 					<div class="select">
-						<select name="exercise-0-type">
-							<option value="reps">Reps</option>
-							<option value="time">Time</option>
-						</select>
+						{{ entry.exercise_type() }}
 					</div>
 					<div class="icon is-small is-left">
 						<i class="fa fa-calculator"></i>
 					</div>
 				</div>
-				<input class="input" name='exercises-0-units' type="number" placeholder="Reps" min="1" value="{{ entry.data['units'] or "" }}">
+				{{ entry.units(class_='input') }}
 			</div>
 			<p class="button is-danger" onclick="handleDel(this)">
 				<span class="icon is-small">

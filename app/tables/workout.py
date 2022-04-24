@@ -41,8 +41,8 @@ class Workout(db.Model):
 
         # Create exercises
         for exercise in exercises:
-            type = ExerciseType.TIME if exercise['type'] == 'time'else ExerciseType.REPS;
-            self.exercises.append(Exercise(exercise['name'], exercise['sets'], exercise['units'], type))
+            type = ExerciseType.TIME if exercise['exercise_type'] == 'time' else ExerciseType.REPS;
+            self.exercises.append(Exercise(exercise['exercise_name'], exercise['sets'], exercise['units'], type))
 
     def __repr__(self):
         return f'<Workout {self.name}>'
