@@ -2,9 +2,10 @@ from app import app, db
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_user, login_required, logout_user
 from forms import LoginForm, RegisterForm
-from tables import User 
+from tables import User
 
-@app.route("/login", methods=['GET', 'POST'])
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     username = form.username.data
@@ -17,19 +18,21 @@ def login():
         # TODO: show user if login succeeded
         if user and user.verify_password(password):
             login_user(user)
-            return redirect(url_for('home'))
+            return redirect(url_for("home"))
         else:
             flash("Invalid username or password", "danger")
 
-    return render_template('user/login.html', form=form)
+    return render_template("user/login.html", form=form)
 
-@app.route("/logout", methods=['GET', 'POST'])
+
+@app.route("/logout", methods=["GET", "POST"])
 @login_required
 def logout():
     logout_user()
-    return redirect('/')
+    return redirect("/")
 
-@app.route("/register", methods=['GET', 'POST'])
+
+@app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
     # Load data from form
@@ -45,9 +48,8 @@ def register():
             user = User(username, password, email)
             db.session.add(user)
             db.session.commit()
-            return redirect(url_for('login'))
+            return redirect(url_for("login"))
         else:
             flash("User already exists", "danger")
 
-    return render_template('user/register.html', form=form)
-
+    return render_template("user/register.html", form=form)

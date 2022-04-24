@@ -7,7 +7,7 @@
 	<div class="field-body">
 		<div class="field">
 			<p class="control is-expanded has-icons-left">
-				{{ form.name(class_='input', placeholder='Workout Name') }}
+				{{ form['name'](class_='input', placeholder='Workout Name') }}
 				<span class="icon is-small is-left">
 					<i class="fa fa-tag"></i>
 				</span>
@@ -22,7 +22,7 @@
 		<div class="field-body">
 			<div class="field">
 				<p class="control is-expanded has-icons-left">
-					{{ entry.exercise_name(class_='input', placeholder='Name') }}
+					{{ entry['name'](class_='input', placeholder='Exercise') }}
 					<span class="icon is-small is-left">
 						<i class="fa fa-tag"></i>
 					</span>
@@ -35,7 +35,7 @@
 			</div>
 			<div class="field">
 				<p class="control is-expanded has-icons-left">
-					{{ entry.sets(class_='input', placeholder='Sets') }}
+					{{ entry['sets'](class_='input', placeholder='Sets') }}
 					<span class="icon is-small is-left">
 						<i class="fa fa-calculator"></i>
 					</span>
@@ -44,13 +44,13 @@
 			<div class="field has-addons">
 				 <div class="control has-icons-left">
 					<div class="select">
-						{{ entry.exercise_type() }}
+						{{ entry['type'] }}
 					</div>
 					<div class="icon is-small is-left">
 						<i class="fa fa-calculator"></i>
 					</div>
 				</div>
-				{{ entry.units(class_='input') }}
+				{{ entry['units'](class_='input') }}
 			</div>
 			<p class="button is-danger" onclick="handleDel(this)">
 				<span class="icon is-small">

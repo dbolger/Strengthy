@@ -4,7 +4,8 @@ from flask_login import current_user, login_required
 from forms import WorkoutCreateForm, WorkoutRecordForm
 from tables import User, Workout
 
-@app.route("/workout/create", methods=['GET', 'POST'])
+
+@app.route("/workout/create", methods=["GET", "POST"])
 @login_required
 def workout_create():
     form = WorkoutCreateForm()
@@ -15,27 +16,32 @@ def workout_create():
         workout = Workout.query.filter_by(user_id=current_user.id, name=name).first()
         if not workout:
             # TODO: add exercises
-            workout = Workout(current_user, name, [e.data for e in form.exercises.entries])
+            workout = Workout(
+                current_user, name, [e.data for e in form.exercises.entries]
+            )
             db.session.add(workout)
             db.session.commit()
 
-            return redirect(url_for('home'));
+            return redirect(url_for("home"))
         else:
             flash("Workout with this name already exists", "danger")
 
-    return render_template('workout/create.html', form=form)
+    return render_template("workout/create.html", form=form)
 
-@app.route("/workout/edit", methods=['GET', 'POST'])
+
+@app.route("/workout/edit", methods=["GET", "POST"])
 @login_required
 def workout_edit():
     # Id is required
-    if 'id' not in request.args:
-        return redirect(url_for('home'))
+    if "id" not in request.args:
+        return redirect(url_for("home"))
 
     # Validate Id
-    workout = Workout.query.filter_by(id=int(request.args['id']), user_id=current_user.id).first()
+    workout = Workout.query.filter_by(
+        id=int(request.args["id"]), user_id=current_user.id
+    ).first()
     if not workout:
-        return redirect(url_for('home'))
+        return redirect(url_for("home"))
 
     form = WorkoutCreateForm()
 
@@ -47,36 +53,42 @@ def workout_edit():
 
         # Write changes to database
         db.session.commit()
-        return redirect(url_for('home'));
+        return redirect(url_for("home"))
     else:
         form.name.data = workout.name
-        form.exercises.pop_entry() # TODO: better way to do this?
+        form.exercises.pop_entry()  # TODO: better way to do this?
 
         for exercise in workout.exercises:
             form.exercises.append_entry(exercise)
 
-    return render_template('workout/create.html', form=form, title=f'Edit Workout "{workout.name}"')
+    return render_template(
+        "workout/create.html", form=form, title=f'Edit Workout "{workout.name}"'
+    )
 
-@app.route("/workout/record", methods=['GET', 'POST'])
+
+@app.route("/workout/record", methods=["GET", "POST"])
 @login_required
 def workout_record():
     form = WorkoutRecordForm()
 
     # Id is required
-    if 'id' not in request.args:
-        return redirect(url_for('home'))
+    if "id" not in request.args:
+        return redirect(url_for("home"))
 
     # Matching workout required
-    workout = Workout.query.filter_by(id=int(request.args['id']), user_id=current_user.id).first()
+    workout = Workout.query.filter_by(
+        id=int(request.args["id"]), user_id=current_user.id
+    ).first()
     if not workout:
-        return redirect(url_for('home'));
+        return redirect(url_for("home"))
 
     if form.validate_on_submit():
         print(form)
 
-    return render_template('workout/record.html', workout=workout, form=form)
+    return render_template("workout/record.html", workout=workout, form=form)
 
-@app.route("/workout/select", methods=['GET'])
+
+@app.route("/workout/select", methods=["GET"])
 @login_required
 def workout_select():
-    return render_template('workout/select.html')
+    return render_template("workout/select.html")
