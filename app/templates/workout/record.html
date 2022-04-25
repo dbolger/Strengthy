@@ -3,10 +3,10 @@
 {% block title %}Record {{ workout.name }}{% endblock %}
 
 {% block form %}
-{% for exercise in workout.exercises %}
-{% set outer_loop = loop %}
+{% for exercise in form.exercises.entries %}
 <div>
-	<h1 id="{{ exercise.name }}" class="title is-4 has-text-black">{{ exercise.name }}</h1>
+	{{ exercise['id'] }}
+	<h1 class="title is-4 has-text-black">{{ workout.exercises[loop.index0].name }}</h1>
 	<table class="table is-fullwidth is-hoverable">
 		<thead>
 			<th>Set</th>
@@ -15,11 +15,11 @@
 			<th>Done</th>
 		</thead>
 		<tbody>
-			{% for i in range(exercise.sets) %}
+			{% for set in exercise.sets.entries %}
 				<tr>
-					<th>{{ i + 1 }}</th>
-					<td><input class="input" name="exercises-{{ outer_loop.index0 }}-sets-{{ i }}-lbs" type="number"></td>
-					<td><input class="input" name="exercises-{{ outer_loop.index0 }}-sets-{{ i }}-reps" type="number"></td>
+					<th>{{ loop.index }}</th>
+					<td>{{ set['lbs'](class_='input') }}</td>
+					<td>{{ set['units'](class_='input') }}</td>
 					<td>
 						<a class="button" onClick="onClickSetCheck(this)">
 							<span class="icon is-small">

@@ -5,12 +5,15 @@ import enum
 # Represents an individual exercise
 class Exercise(db.Model):
     __tablename__ = "exercises"
+
+    # fields
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     sets = db.Column(db.Integer)
     units = db.Column(db.Integer)
     type = db.Column(db.Enum("reps", "time"), nullable=False)
-    # Workout Relationship
+
+    # foreign keys
     workout_id = db.Column(db.Integer, db.ForeignKey("workouts.id"))
 
     def __init__(self, name, sets, units, type):
@@ -26,17 +29,23 @@ class Exercise(db.Model):
 # Represents a singular workout
 class Workout(db.Model):
     __tablename__ = "workouts"
+
+    # fields
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+
     # foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
     # relationships
     exercises = db.relationship("Exercise", backref="workout", lazy="dynamic")
+    records = db.relationship("WorkoutRecord", backref="workout", lazy="dynamic")
 
     def __init__(self, user, name, exercises):
         self.name = name
         self.user_id = user.id
 
+        # populate exercises
         for exercise in exercises:
             self.exercises.append(
                 Exercise(
@@ -51,9 +60,35 @@ class Workout(db.Model):
         return f"<Workout {self.name}>"
 
 
-# Connects workouts to it's exercises
-# class WorkoutExercise(db.Model):
-#    __table__ = 'workout_exercises'
-#    id = db.Column(db.Integer, primary_key=True)
-#    workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
-#    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'))
+# Represents the recording of a single set within a workout recording
+class SetRecord(db.Model):
+    __tablename__ = "set_records"
+    id = db.Column(db.Integer, primary_key=True)
+    lbs = db.Column(db.Integer)
+    reps = db.Column(db.Integer)
+
+    # foreign keys
+    workout_record_id = db.Column(db.Integer, db.ForeignKey("workout_records.id"))
+    exercise_id = db.Column(db.Integer, db.ForeignKey("exercises.id"), nullable=False)
+
+    # relationships
+    exercise = db.relationship("Exercise")
+
+
+# Represents a recording of a workout
+class WorkoutRecord(db.Model):
+    __tablename__ = "workout_records"
+
+    # fields
+    id = db.Column(db.Integer, primary_key=True)
+    finished = db.Column(db.DateTime)
+
+    # foreign keys
+    workout_id = db.Column(db.Integer, db.ForeignKey("workouts.id"))
+
+    # relationships
+    sets = db.relationship("SetRecord", backref="workout_record", lazy="dynamic")
+
+    def __init__(self, workout, finished):
+        self.workout = workout
+        self.finished = finished

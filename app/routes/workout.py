@@ -1,8 +1,9 @@
 from app import app, db
+from datetime import datetime
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_required
 from forms import WorkoutCreateForm, WorkoutRecordForm
-from tables import Exercise, User, Workout
+from tables import Exercise, User, Workout, WorkoutRecord, SetRecord
 
 
 @app.route("/workout/create", methods=["GET", "POST"])
@@ -25,6 +26,9 @@ def workout_create():
             return redirect(url_for("home"))
         else:
             flash("Workout with this name already exists", "danger")
+    else:
+        print(form)
+        print(form.errors)
 
     return render_template("workout/create.html", form=form)
 
@@ -53,7 +57,7 @@ def workout_edit():
                 workout_id=workout.id, id=int(entry.data["id"])
             ).first()
 
-            if not exercise:  # NOTE error?
+            if not exercise:
                 continue
 
             # Update exercise
@@ -61,8 +65,6 @@ def workout_edit():
             exercise.sets = entry.data["sets"]
             exercise.units = entry.data["units"]
             exercise.type = entry.data["type"]
-
-            print(exercise)
 
         # Write changes to database
         db.session.commit()
@@ -96,10 +98,36 @@ def workout_record():
         return redirect(url_for("home"))
 
     if form.validate_on_submit():
-        # Form has been submitted and is valid FIXME
-        print(form)
+        # Form has been submitted and is valid
+        workout_record = WorkoutRecord(workout, datetime.now())
 
-    return render_template("workout/record.html", workout=workout, form=form)
+        # Interate over form exercise entries
+        for ee in form.exercises.entries:
+            id = ee.data["id"]
+
+            # And over that exercise's sets
+            for se in ee.sets.entries:
+                lbs = se.data["lbs"]
+                units = se.data["units"]
+
+                if lbs and units:
+                    # Add the set to the workout record
+                    workout_record.sets.append(
+                        SetRecord(lbs=lbs, reps=units, exercise_id=id)
+                    )
+
+        db.session.add(workout_record)
+        db.session.commit()
+
+        return redirect(url_for("home"))
+    else:
+        # Populate form with data
+        for exercise in workout.exercises:
+            form.exercises.append_entry(
+                {"id": exercise.id, "sets": [{}] * exercise.sets}
+            )
+
+        return render_template("workout/record.html", workout=workout, form=form)
 
 
 @app.route("/workout/select", methods=["GET"])

@@ -1,9 +1,8 @@
 var rowsDiv = document.getElementById("rows");
 var rowId = rowsDiv.children.length;
 
-
 function handleAdd() {
-	newRow = rowsDiv.children[0].cloneNode(true);
+	newRow = rowsDiv.children[1].cloneNode(true);
 
 	exerciseNameInput = newRow.children[0].children[0].children[0].children[0];
 	exerciseNameInput.value = '';
