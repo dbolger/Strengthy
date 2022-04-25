@@ -106,9 +106,11 @@
 						<table class="table is-fullwidth is-striped">
 							<tbody>
 								{% for record in records %}
+								<tr>
 									<td>{{ record.workout.name }}</td>
-									<td>{{ record.finished }}</td>
+									<td>{{ record.finished.strftime("%m/%d/%y %-I:%M %p") }}</td>
 									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
+								</tr>
 								{% endfor %}
 							</tbody>
 						</table>
