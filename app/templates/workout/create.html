@@ -1,6 +1,12 @@
 {% extends 'base/form.html' %}
 
-{% block title %}Create Workout{% endblock %}
+{% block title %}
+	{% if workout %}
+		Edit {{ workout.name }}
+	{% else %}
+		Create Workout
+	{% endif %}
+{% endblock %}
 
 {% block form %}
 <div class="field is-horizontal">
@@ -18,7 +24,9 @@
 
 <div id="rows" class="field">
 	{% for entry in form.exercises.entries %}
-	{{ entry['id']() }}
+	{% if workout %}
+		{{ entry['id']() }}
+	{% endif %}
 	<div class="field is-horizontal">
 		<div class="field-body">
 			<div class="field">
@@ -73,10 +81,14 @@
 
 <div class="field is-horizontal is-grouped is-grouped-right">
 	<button class="button is-success ">
-		<span class="icon is-small">
-			<i class="fa fa-check"></i>
+		<span class="icon is-small"><i class="fa fa-check"></i></span>
+		<span>
+			{% if workout %}
+				Save Changes
+			{% else %}
+				Create Workout
+			{% endif %}
 		</span>
-		<span>Create Workout</span>
 	</button>
 </div>
 

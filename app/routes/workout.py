@@ -27,7 +27,6 @@ def workout_create():
         else:
             flash("Workout with this name already exists", "danger")
     else:
-        print(form)
         print(form.errors)
 
     return render_template("workout/create.html", form=form)
@@ -50,21 +49,35 @@ def workout_edit():
     form = WorkoutCreateForm()
 
     if form.validate_on_submit():
-        # Form has been submitted, write changes FIXME
+        # Form has been submitted, write changes
         for entry in form.exercises.entries:
-            # Get the specified exercise TODO needs hidden id field
-            exercise = Exercise.query.filter_by(
-                workout_id=workout.id, id=int(entry.data["id"])
-            ).first()
 
-            if not exercise:
-                continue
+            id = entry.data["id"]
+            name = entry.data["name"]
+            sets = entry.data["sets"]
+            units = entry.data["units"]
+            type = entry.data["type"]
 
-            # Update exercise
-            exercise.name = entry.data["name"]
-            exercise.sets = entry.data["sets"]
-            exercise.units = entry.data["units"]
-            exercise.type = entry.data["type"]
+            # Is this a new exercise or an old one
+            if id:
+                # Get the specified exercise
+                exercise = Exercise.query.filter_by(
+                    workout_id=workout.id, id=int(id)
+                ).first()
+
+                if not exercise:
+                    continue
+
+                # Update exercise
+                exercise.name = name
+                exercise.sets = sets
+                exercise.units = units
+                exercise.type = type
+            else:
+                # Create new exercise
+                workout.exercises.append(Exercise(name, sets, units, type))
+
+        # FIXME: support deleting exercises
 
         # Write changes to database
         db.session.commit()
@@ -76,9 +89,7 @@ def workout_edit():
         for exercise in workout.exercises:
             form.exercises.append_entry(exercise)
 
-    return render_template(
-        "workout/create.html", form=form, title=f'Edit Workout "{workout.name}"'
-    )
+    return render_template("workout/create.html", form=form, workout=workout)
 
 
 @app.route("/workout/record", methods=["GET", "POST"])
