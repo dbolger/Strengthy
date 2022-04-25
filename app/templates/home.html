@@ -105,36 +105,11 @@
 					<div class="content">
 						<table class="table is-fullwidth is-striped">
 							<tbody>
-								<tr>
-									<td>Push Day</td>
-									<td>04/04/22 4:30 PM</td>
+								{% for record in records %}
+									<td>{{ record.workout.name }}</td>
+									<td>{{ record.finished }}</td>
 									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
-								</tr>
-								<tr>
-									<td>Leg Day</td>
-									<td>04/02/22 2:13 PM</td>
-									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
-								</tr>
-								<tr>
-									<td>Pull Day</td>
-									<td>04/01/22 1:30 PM</td>
-									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
-								</tr>
-								<tr>
-									<td>Push Day</td>
-									<td>03/29/22 4:30 PM</td>
-									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
-								</tr>
-								<tr>
-									<td>Leg Day</td>
-									<td>03/28/22 2:13 PM</td>
-									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
-								</tr>
-								<tr>
-									<td>Pull Day</td>
-									<td>03/27/22 1:30 PM</td>
-									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
-								</tr>
+								{% endfor %}
 							</tbody>
 						</table>
 					</div>
