@@ -1,22 +1,31 @@
 // Register 'Enter' listeners on all inputs
 allInputs = Array.from(document.getElementsByClassName('input'))
 	.filter(e => e.type == 'number');
-allInputs.forEach(e => e.addEventListener('keypress', handleEnterKey));
+allInputs.forEach(e => e.addEventListener('keydown', handleEnterKey));
 
 function handleEnterKey(event) {
-	if (event.key === "Enter") {
+	console.log(event);
+	if (event.key === "Enter" || event.key === "Tab") {
 		event.preventDefault();
 
 		//Isolate the node that we're after
 		const currentNode = event.target;
-
 		//Find the current tab index.
-		currentIndex = [...allInputs].findIndex(el => currentNode.isEqualNode(el))
+		currentIndex = [...allInputs].findIndex(el => currentNode.isEqualNode(el));
 
 		//focus the following element
 		const targetIndex = (currentIndex + 1) % allInputs.length;
-		allInputs[targetIndex].focus();}
+		const targetNode = allInputs[targetIndex];
 
+		if (!targetNode.parentElement.parentElement.isEqualNode(currentNode.parentElement.parentElement)) {
+			// going to new row
+			if (currentNode.value != "" && allInputs[currentIndex-1].value != "") {
+				onClickSetCheck(currentNode.parentElement.parentElement.children[3].children[0]);
+			}
+		}
+
+		targetNode.focus();
+	}
 }
 
 function setReset(row, values=true) {
