@@ -1,4 +1,5 @@
 from app import db, login_manager
+from flask_login import current_user
 import enum
 
 
@@ -84,6 +85,7 @@ class WorkoutRecord(db.Model):
     finished = db.Column(db.DateTime)
 
     # foreign keys
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     workout_id = db.Column(db.Integer, db.ForeignKey("workouts.id"))
 
     # relationships
@@ -92,3 +94,4 @@ class WorkoutRecord(db.Model):
     def __init__(self, workout, finished):
         self.workout = workout
         self.finished = finished
+        self.user = current_user

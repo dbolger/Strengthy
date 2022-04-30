@@ -145,3 +145,19 @@ def workout_record():
 @login_required
 def workout_select():
     return render_template("workout/select.html")
+
+
+@app.route("/workout/history", methods=["GET"])
+@login_required
+def workout_history():
+    if "id" not in request.args:
+        return redirect(url_for("home"))
+
+    # Matching workout record required
+    record = WorkoutRecord.query.filter_by(
+        id=int(request.args["id"]), user_id=current_user.id
+    ).first()
+    if not record:
+        return redirect(url_for("home"))
+
+    return render_template("workout/history.html", record=record)

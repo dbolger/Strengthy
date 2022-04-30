@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
 
     # relationships
     workouts = db.relationship("Workout", backref="user", lazy="dynamic")
+    records = db.relationship("WorkoutRecord", backref="user", lazy="dynamic")
 
     def __init__(self, username, password, email):
         self.username = username

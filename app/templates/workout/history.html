@@ -1,0 +1,32 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Workout{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="columns is-centered">
+		<div class="column">
+			<h1 class="title is-2">Workout</h1>
+			<div class="box">
+				<table class="table is-fullwidth is-hoverable">
+					<thead>
+						<th>Set</th>
+						<th>lbs</th>
+						<th>Reps</th>
+						<th>Done</th>
+					</thead>
+					<tbody>
+						{% for set in record.sets %}
+							<tr>
+								<th></th>
+								<th>{{ set.lbs }}</th>
+								<th>{{ set.reps }}</th>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

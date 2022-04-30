@@ -19,20 +19,20 @@
 		<div class="tile is-ancestor has-text-centered">
 			<div class="tile is-parent">
 				<article class="tile is-child box">
-					<p class="title has-text-black">0</p>
-					<p class="subtitle has-text-black">Sets Completed</p>
+					<p class="title has-text-black">{{ current_user.workouts.count() }}</p>
+					<p class="subtitle has-text-black">Workouts</p>
 				</article>
 			</div>
 			<div class="tile is-parent">
 				<article class="tile is-child box">
-					<p class="title has-text-black">0</p>
+					<p class="title has-text-black">{{ records.count()  }}</p>
 					<p class="subtitle has-text-black">Workouts Completed</p>
 				</article>
 			</div>
 			<div class="tile is-parent">
 				<article class="tile is-child box">
-					<p class="title has-text-black">{{ current_user.workouts.count() }}</p>
-					<p class="subtitle has-text-black">Workouts</p>
+					<p class="title has-text-black">0</p>
+					<p class="subtitle has-text-black">Sets Completed</p>
 				</article>
 			</div>
 			<!-- Something else?
@@ -109,7 +109,7 @@
 								<tr>
 									<td>{{ record.workout.name }}</td>
 									<td>{{ record.finished.strftime("%m/%d/%y %-I:%M %p") }}</td>
-									<td class="level-right"><a class="button is-small is-primary" href="#">View</a></td>
+									<td class="level-right"><a class="button is-small is-primary" href="/workout/history?id={{ record.id }}">View</a></td>
 								</tr>
 								{% endfor %}
 							</tbody>
