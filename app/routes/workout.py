@@ -120,6 +120,7 @@ def workout_record():
             for se in ee.sets.entries:
                 lbs = se.data["lbs"]
                 units = se.data["units"]
+                print(id, lbs, units)
 
                 if lbs and units:
                     # Add the set to the workout record

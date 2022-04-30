@@ -15,8 +15,8 @@ def home():
     # Prepare so we don't have to do this in the template
     records = (
         db.session.query(WorkoutRecord)
-        .join(Workout)
-        .filter(Workout.user_id == current_user.id)
+        .filter_by(user_id=current_user.id)
+        .order_by(WorkoutRecord.finished.desc())
     )
 
     return render_template("home.html", records=records)

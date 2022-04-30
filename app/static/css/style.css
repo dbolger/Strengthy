@@ -4,15 +4,20 @@
 		rgba(0, 0, 0, 0.7)
 	), url('/static/img/index.jpg') no-repeat center center fixed;
 
-	/* background: url('/static/img/index.jpg') no-repeat center center fixed; */
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 }
 
+/* pretty colors */
+@media screen and (max-width: 1023px) {
+	.navbar-menu {
+		background: linear-gradient(to right, #55F, #95F);
+	}
+}
 .welcome {
 	background: linear-gradient(to right, #55F, #95F);
-    margin-bottom: 16px;
-    border-radius: 6px;
+	margin-bottom: 16px;
+	border-radius: 6px;
 }

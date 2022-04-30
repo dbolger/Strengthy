@@ -11,7 +11,6 @@ from wtforms.validators import DataRequired, Email, Optional
 
 # /workout/create
 class ExerciseCreateForm(Form):
-    # TODO no exercise_*, breaks workout_edit endpoint
     id = HiddenField("id", [Optional()])
     name = StringField("name", [DataRequired()])
     sets = IntegerField("sets", [DataRequired()])
