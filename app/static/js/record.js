@@ -3,8 +3,12 @@ allInputs = Array.from(document.getElementsByClassName('input'))
 	.filter(e => e.type == 'number');
 allInputs.forEach(e => e.addEventListener('keydown', handleEnterKey));
 
+// Register onsubmit handler for form
+document.getElementById("form").addEventListener('submit', (el) => {
+	Array.from(event.target.getElementsByTagName('input')).forEach(i => i.disabled = false);
+});
+
 function handleEnterKey(event) {
-	console.log(event);
 	if (event.key === "Enter" || event.key === "Tab") {
 		event.preventDefault();
 

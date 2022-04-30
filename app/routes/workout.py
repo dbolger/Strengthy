@@ -114,13 +114,13 @@ def workout_record():
 
         # Interate over form exercise entries
         for ee in form.exercises.entries:
+
             id = ee.data["id"]
 
             # And over that exercise's sets
             for se in ee.sets.entries:
                 lbs = se.data["lbs"]
                 units = se.data["units"]
-                print(id, lbs, units)
 
                 if lbs and units:
                     # Add the set to the workout record
