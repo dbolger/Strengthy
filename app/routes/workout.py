@@ -92,18 +92,20 @@ def workout_edit():
     return render_template("workout/create.html", form=form, workout=workout)
 
 
-@app.route("/workout/record", methods=["GET", "POST"])
+@app.route("/workout/record")
 @login_required
-def workout_record():
-    form = WorkoutRecordForm()
+def workout_record_select():
+    return render_template("workout/record_select.html")
 
-    # Id is required
-    if "id" not in request.args:
-        return redirect(url_for("home"))
+
+@app.route("/workout/record/<workout_id>", methods=["GET", "POST"])
+@login_required
+def workout_record(workout_id=None):
+    form = WorkoutRecordForm()
 
     # Matching workout required
     workout = Workout.query.filter_by(
-        id=int(request.args["id"]), user_id=current_user.id
+        id=int(workout_id), user_id=current_user.id
     ).first()
     if not workout:
         return redirect(url_for("home"))
@@ -142,22 +144,13 @@ def workout_record():
         return render_template("workout/record.html", workout=workout, form=form)
 
 
-@app.route("/workout/select", methods=["GET"])
+@app.route("/workout/history/<record_id>")
 @login_required
-def workout_select():
-    return render_template("workout/select.html")
-
-
-@app.route("/workout/history", methods=["GET"])
-@login_required
-def workout_history():
-    if "id" not in request.args:
-        return redirect(url_for("home"))
-
-    # Matching workout record required
+def workout_history(record_id=None):
     record = WorkoutRecord.query.filter_by(
-        id=int(request.args["id"]), user_id=current_user.id
+        id=int(record_id), user_id=current_user.id
     ).first()
+
     if not record:
         return redirect(url_for("home"))
 

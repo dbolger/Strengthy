@@ -14,7 +14,7 @@
 						{% for exercise in workout.exercises %}
 						<p>{{ exercise.sets }} x {{ exercise.units }} x {{ exercise.name }}</p>
 						{% endfor %}
-						<a class="button" href="/workout/record?id={{ workout.id }}">Start</a>
+						<a class="button" href="/workout/record/{{ workout.id }}">Start</a>
 					</div>
 				</div>
 			</div>
