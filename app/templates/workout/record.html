@@ -16,18 +16,18 @@
 		</thead>
 		<tbody>
 			{% for set in exercise.sets.entries %}
-				<tr>
-					<th>{{ loop.index }}</th>
-					<td>{{ set['lbs'](class_='input') }}</td>
-					<td>{{ set['units'](class_='input') }}</td>
-					<td>
-						<a class="button" onClick="onClickSetCheck(this)">
-							<span class="icon is-small">
-								<i class="fa fa-check"></i>
-							</span>
-						</a>
-					</td>
-				</tr>
+			<tr>
+				<th>{{ loop.index }}</th>
+				<td>{{ set['lbs'](class_='input') }}</td>
+				<td>{{ set['units'](class_='input') }}</td>
+				<td>
+					<a class="button" onClick="onClickSetCheck(this)">
+						<span class="icon is-small">
+							<i class="fa fa-check"></i>
+						</span>
+					</a>
+				</td>
+			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
