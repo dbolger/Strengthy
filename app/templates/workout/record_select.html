@@ -1,16 +1,17 @@
 {% extends 'base/layout.html' %}
 
 {% block content %}
-<div class="continer">
+<div class="container">
 	<div class="columns is-centered">
 		{% for workout in current_user.workouts %}
 		<div class="column">
 			<div class="card">
 				<header class="card-header">
-					<p class="card-header-title"> {{ workout.name }}</p>
+					<p class="card-header-title"> Workout: {{ workout.name }}</p>
 				</header>
 				<div class="card-content">
 					<div class="content">
+						Exercises:
 						{% for exercise in workout.exercises %}
 						<p>{{ exercise.sets }} x {{ exercise.units }} x {{ exercise.name }}</p>
 						{% endfor %}
@@ -19,8 +20,26 @@
 				</div>
 			</div>
 		</div>
+		{% else %}
+		<div class="card">
+			<div class="card-content">
+				<div class="content">
+					<p style="text-align: center;">You have no workouts.</p>
+					<div class="buttons is-centered">
+						<a class="button is-primary" href="../workout/create">
+							<span class="icon is-small">
+								<i class="fa fa-plus"></i>
+							</span>
+							<span>Create Workout</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		{% endfor %}
 	</div>
+</div>
+</div>
 </div>
 
 {% endblock %}
