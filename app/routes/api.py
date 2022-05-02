@@ -1,5 +1,5 @@
 from app import app, db
-from flask import redirect, request
+from flask import redirect, request, jsonify
 from flask_login import current_user, login_required
 from tables import Workout
 
@@ -18,3 +18,13 @@ def api_workout_delete():
         db.session.commit()
 
     return redirect("/home")
+
+
+@app.route("/api/progress/exercise", methods=["GET"])
+@login_required
+def api_progress_exercise():
+    if "id" not in request.args:
+        return redirect("/home")
+
+    # FIXME
+    return jsonify()
