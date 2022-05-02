@@ -62,7 +62,7 @@
 										<td>{{ workout.exercises.count() }} exercises</td>
 										<td class="level-right">
 											<p class="buttons">
-												<a class="button is-small is-primary" href="/workout/edit?id={{ workout.id }}">Edit</a>
+												<a class="button is-small is-primary" href="/workout/edit/{{ workout.id }}">Edit</a>
 												<a class="button is-small is-danger js-modal-trigger" data-target="modal-{{ workout.id }}" href="#">Delete</a>
 											</p>
 										</td>

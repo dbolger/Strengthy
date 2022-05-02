@@ -32,16 +32,12 @@ def workout_create():
     return render_template("workout/create.html", form=form)
 
 
-@app.route("/workout/edit", methods=["GET", "POST"])
+@app.route("/workout/edit/<workout_id>", methods=["GET", "POST"])
 @login_required
-def workout_edit():
-    # Id is required
-    if "id" not in request.args:
-        return redirect(url_for("home"))
-
+def workout_edit(workout_id=None):
     # Validate Id
     workout = Workout.query.filter_by(
-        id=int(request.args["id"]), user_id=current_user.id
+        id=int(workout_id), user_id=current_user.id
     ).first()
     if not workout:
         return redirect(url_for("home"))
