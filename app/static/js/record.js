@@ -87,11 +87,12 @@ function onClickSetCheck(elem) {
 
 function onClickAddSet(elem) {
 	// Create the new row
-	let tableBody = elem.parentElement.parentElement.children[1].children[1];
+	let tableBody = elem.parentElement.parentElement.children[2].children[1];
 	let row = tableBody.children[0].cloneNode(true);
 
 	// Add new row to table
 	setReset(row);
 	setSetid(row, tableBody.children.length)
+	row.addEventListener('keydown', handleEnterKey)
 	tableBody.appendChild(row)
 }
