@@ -3,3 +3,4 @@ flask
 flask_login
 flask_SQLAlchemy
 flask_wtf
+pytest
