@@ -17,7 +17,6 @@ login_manager.login_view = "/login"
 # Setup SQLAlchemy
 # https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/#a-minimal-application
 db = SQLAlchemy(app)
-# TODO: do in script
 import tables.user
 
 db.create_all()

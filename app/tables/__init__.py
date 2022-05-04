@@ -1,2 +1,2 @@
-from tables.user import User
-from tables.workout import *
+from .user import *
+from .workout import *
