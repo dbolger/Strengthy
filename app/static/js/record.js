@@ -87,7 +87,7 @@ function onClickSetCheck(elem) {
 
 function onClickAddSet(elem) {
 	// Create the new row
-	let tableBody = elem.parentElement.parentElement.children[2].children[1];
+	let tableBody = elem.parentElement.parentElement.children[0].children[1];
 	let row = tableBody.children[0].cloneNode(true);
 
 	// Add new row to table
@@ -95,4 +95,20 @@ function onClickAddSet(elem) {
 	setSetid(row, tableBody.children.length)
 	row.addEventListener('keydown', handleEnterKey)
 	tableBody.appendChild(row)
+}
+
+function loadTimerTimes() {
+
+}
+
+function onClickPausePlayTimer(elem) {
+	if (elem.children[0].children[0].classList.contains('fa-play')) {
+		paused = false;
+		elem.children[0].children[0].classList.remove('fa-play');
+		elem.children[0].children[0].classList.add('fa-pause');
+	} else {
+		paused = true;
+		elem.children[0].children[0].classList.add('fa-play');
+		elem.children[0].children[0].classList.remove('fa-pause');
+	}
 }

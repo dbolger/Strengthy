@@ -3,45 +3,64 @@
 {% block title %}Record {{ workout.name }}{% endblock %}
 
 {% block form %}
-{% for exercise in form.exercises.entries %}
 <div>
-	{{ exercise['id'] }}
-	<h1 class="title is-4 has-text-black">{{ workout.exercises[loop.index0].name }}</h1>
-	<table class="table is-fullwidth is-hoverable">
-		<thead>
-			<th>Set</th>
-			<th>lbs</th>
-			<th>Reps</th>
-			<th>Done</th>
-		</thead>
-		<tbody>
-			{% for set in exercise.sets.entries %}
-			<tr>
-				<th>{{ loop.index }}</th>
-				<td>{{ set['lbs'](class_='input') }}</td>
-				<td>{{ set['units'](class_='input') }}</td>
-				<td>
-					<a class="button" onClick="onClickSetCheck(this)">
-						<span class="icon is-small">
-							<i class="fa fa-check"></i>
-						</span>
-					</a>
-				</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<div class="buttons is-centered">
-		<a class="button is-primary" onClick="onClickAddSet(this)">
-			<span class="icon is-small">
-				<i class="fa fa-plus"></i>
-			</span>
-			<span>Add Set</span>
-		</a>
+	{% for exercise in workout.exercises %}
+	<h1 class="title is-4 has-text-black">{{ exercise.name }}</h1>
+	<div>
+		<table class="table is-fullwidth is-hoverable">
+			<thead>
+				<th>Set</th>
+				{% if exercise.type == 'time' %}
+				<th>Timer</th>
+				{% else %}
+				<th>lbs</th>
+				<th>Reps</th>
+				{% endif %}
+				<th>Done</th>
+			</thead>
+			<tbody>
+				{% for set in form.exercises.entries[loop.index0].sets.entries %}
+				<tr>
+					<th>{{ loop.index }}</th>
+					{% if exercise.type == 'time' %}
+					<td>
+						<div class="timer">
+							<a class="button" onClick="onClickPausePlayTimer(this)">
+								<span class="icon is-small">
+									<i class="fa fa-play"></i>
+								</span>
+							</a>
+							<span class="{{ ['units'] }}">
+							</span>
+						</div>
+					</td>
+					{% else %}
+					<td>{{ set['lbs'](class_='input') }}</td>
+					<td>{{ set['units'](class_='input') }}</td>
+					{% endif %}
+					<td>
+						<a class="button" onClick="onClickSetCheck(this)">
+							<span class="icon is-small">
+								<i class="fa fa-check"></i>
+							</span>
+						</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="buttons is-centered">
+			<a class="button is-primary" onClick="onClickAddSet(this)">
+				<span class="icon is-small">
+					<i class="fa fa-plus"></i>
+				</span>
+				<span>Add Set</span>
+			</a>
+		</div>
+		<hr>
 	</div>
-	<hr>
+	{% endfor %}
 </div>
-{% endfor %}
 
 <div class="field is-horizontal is-grouped is-grouped-right">
 	<button class="button is-success ">
