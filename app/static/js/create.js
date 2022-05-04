@@ -36,7 +36,7 @@ document.getElementById("add").onclick = handleAdd;
 
 function handleChange(elem) {
 	if (elem.target.value == 'time') {
-		elem.target.parentNode.parentNode.parentNode.children[1].placeholder = "Time";
+		elem.target.parentNode.parentNode.parentNode.children[1].placeholder = "Time (in seconds)";
 		elem.target.parentNode.parentNode.parentNode.children[1].selected = true;
 		elem.target.parentNode.parentNode.children[1].children[0].classList.remove('fa-calculator');
 		elem.target.parentNode.parentNode.children[1].children[0].classList.add('fa-clock-o');
