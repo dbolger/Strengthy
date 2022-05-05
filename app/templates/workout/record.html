@@ -5,6 +5,7 @@
 {% block form %}
 <div>
 	{% for exercise in workout.exercises %}
+	{{ form.exercises.entries[loop.index0]['id'] }}
 	<h1 class="title is-4 has-text-black">{{ exercise.name }}</h1>
 	<div>
 		<table class="table is-fullwidth is-hoverable">

@@ -1,11 +1,10 @@
 {% extends 'base/layout.html' %}
 
-{% block title %}{{ exercise.name }} Progress{% endblock %}
-
 {% block content %}
 <div class="container">
 	<div class="columns is-centered">
 		<div class="column">
+			<h1 class="title is-2">{{ exercise.name }}</h1>
 			<div class="box">
 				<canvas id="exercise_chart"></canvas>
 			</div>
@@ -13,24 +12,9 @@
 	</div>
 </div>
 
+<script type="text/javascript" src="/static/js/chart.js"></script>
 <script>
-	new Chart(document.getElementById('exercise_chart'), {
-		type: 'line',
-		data: {
-			cubicInterpolationMode: 'monotone',
-			tension: 0.4,
-			pointStyle: 'circle',
-			pointRadius: 5,
-			pointHoverRadius: 10,
-		},
-		option: {
-			scales: {
-				y: {
-					beginAtZero: true
-				}
-			}
-		}
-	});
+	exercise_chart('exercise_chart', {{ exercise.id }});
 </script>
 
 {% endblock %}

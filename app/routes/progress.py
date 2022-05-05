@@ -7,12 +7,10 @@ from tables import Exercise, Workout
 @app.route("/progress/exercise/<exercise_id>")
 @login_required
 def progress_exercise(exercise_id=None):
-    # FIXME
-
     exercise = (
-        db.session.query(Workout, Exercise)
-        .filter(Exercise.id == exercise_id)
-        .filter(Workout.user_id == current_user.id)
+        db.session.query(Exercise)
+        .filter_by(id=exercise_id)
+        .join(Workout, Workout.user_id == current_user.id)
         .first()
     )
     if not exercise:

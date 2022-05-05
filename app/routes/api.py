@@ -1,7 +1,7 @@
 from app import app, db
 from flask import redirect, request, jsonify
 from flask_login import current_user, login_required
-from tables import Workout
+from tables import Exercise, SetRecord, Workout, WorkoutRecord
 
 
 @app.route("/api/workout/delete", methods=["GET"])
@@ -20,11 +20,30 @@ def api_workout_delete():
     return redirect("/home")
 
 
-@app.route("/api/progress/exercise", methods=["GET"])
+@app.route("/api/progress/exercise/<exercise_id>", methods=["GET"])
 @login_required
-def api_progress_exercise():
-    if "id" not in request.args:
-        return redirect("/home")
+def api_progress_exercise(exercise_id=None):
+    # Get exercise from database NOTE: consider adding userid to exercise
+    exercise = (
+        db.session.query(Exercise)
+        .filter_by(id=exercise_id)
+        .join(Workout, Workout.user_id == current_user.id)
+        .first()
+    )
+    if not exercise:
+        return redirect(url_for("home"))
 
-    # FIXME
-    return jsonify()
+    results = (
+        db.session.query(WorkoutRecord.id, db.func.max(SetRecord.lbs))
+        # .join(SetRecord.workout_record_id == WorkoutRecord.id)
+        .filter(
+            SetRecord.exercise_id == exercise_id,
+            WorkoutRecord.user_id == current_user.id,
+            SetRecord.workout_record_id == WorkoutRecord.id,
+        ).group_by(WorkoutRecord.id)
+    ).all()
+
+    print(results)
+
+    # TODO doesnt work
+    return jsonify(results)

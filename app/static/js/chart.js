@@ -1,7 +1,6 @@
-
-function fillChart(id) {
-	const ctx = document.getElementById(id)
-	new Chart(document.getElementById('exercise_chart'), {
+function exercise_chart(elem_id, exercise_id) {
+	// Create initial chart
+	let chart = new Chart(document.getElementById(elem_id), {
 		type: 'line',
 		data: {
 			cubicInterpolationMode: 'monotone',
@@ -18,4 +17,6 @@ function fillChart(id) {
 			}
 		}
 	});
+
+	// Load chart data for exercise
 }
