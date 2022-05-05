@@ -32,7 +32,7 @@ function handleEnterKey(event) {
 	}
 }
 
-function setReset(row, values=true) {
+function setReset(row, index, values=true) {
 	let lbsInput = row.children[1].children[0];
 	let repsInput = row.children[2].children[0];
 	let doneButton = row.children[3].children[0];
@@ -46,6 +46,16 @@ function setReset(row, values=true) {
 	lbsInput.classList.remove('is-danger');
 	repsInput.classList.remove('is-success');
 	repsInput.classList.remove('is-danger');
+
+	// update id/classes to new row index
+	current = lbsInput.id;
+	updated = current.substring(0, current.length - 5);
+	lbs = updated + index + '-lbs';
+	lbsInput.id = lbs;
+	lbsInput.name = lbs;
+	reps = updated + index + '-reps'
+	repsInput.id = reps;
+	repsInput.name = reps;
 
 	doneButton.classList.remove('is-success');
 
@@ -77,7 +87,7 @@ function setCheck(row) {
 // Called when the check at the end of a set line is clicked
 function onClickSetCheck(elem) {
 	if (elem.classList.contains('is-success')) {
-		setReset(elem.parentElement.parentElement, false);
+		setReset(elem.parentElement.parentElement, elem.parentElement.parentElement.parentElement.children.length - 1, false);
 	} else {
 		elem.classList.add('is-success');
 
@@ -91,7 +101,7 @@ function onClickAddSet(elem) {
 	let row = tableBody.children[0].cloneNode(true);
 
 	// Add new row to table
-	setReset(row);
+	setReset(row, tableBody.children.length, false);
 	setSetid(row, tableBody.children.length)
 	row.addEventListener('keydown', handleEnterKey)
 	tableBody.appendChild(row)
