@@ -17,7 +17,7 @@ def test_new_workout():
     """
     GIVEN a Workout model
     WHEN a new Workout is created
-    THEN check that the email, hashed_password, and role fields are defined correctly
+    THEN check that the user_id, name, and exercises fields are defined correctly
     """
 
     # TODO other way to generate new user?

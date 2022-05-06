@@ -225,10 +225,11 @@ The web application will be developed in Python using the Flask framework. A dat
 	\item[Environment] For the project, Hayden was developing on Void Linux while Dylan was developing on Arch Linux. Both of our environments typically involved a web browser and the command line.
 	\item[Tools] For our tools, we both used the code editor Vim, each with plugins installed to ease development. For source control, we used Git and hosted the source on a VPS. Typically to locally develop and test the web application, we would use the 'flask run' command on the project to start a local instance of the Flask web app.
 \end{description}
-\subsection{Reused Components}
 
-\section{Testing}
-\subsection{Scenarios}
-\subsection{Results}
+\subsection{Reused Components}
+Objects stored in the database such as workouts and users are represented as classes which are used to access data. These classes are also reused to store data in the database using SqlAlchemy annotations. When rendering html pages, the basic header is reused across all pages using jinja2 templates.
+
+\subsection{Testing Scenarios}
+Basic object creation is tested to ensure that an object’s fields are being properly populated. Routes are also tested to ensure that if a user who isn’t logged in tries to access certain pages, they are redirected to login.
 
 \end{document}
