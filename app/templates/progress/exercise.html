@@ -14,7 +14,7 @@
 
 <script type="text/javascript" src="/static/js/chart.js"></script>
 <script>
-	exercise_chart('exercise_chart', {{ exercise.id }});
+	exercise_chart('exercise_chart', {{ exercise.id }}, '{{ exercise.name }}');
 </script>
 
 {% endblock %}

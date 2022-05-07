@@ -34,7 +34,7 @@ def api_progress_exercise(exercise_id=None):
         return redirect(url_for("home"))
 
     results = (
-        db.session.query(WorkoutRecord.id, db.func.max(SetRecord.lbs))
+        db.session.query(WorkoutRecord.finished, db.func.max(SetRecord.lbs))
         # .join(SetRecord.workout_record_id == WorkoutRecord.id)
         .filter(
             SetRecord.exercise_id == exercise_id,
@@ -43,7 +43,10 @@ def api_progress_exercise(exercise_id=None):
         ).group_by(WorkoutRecord.id)
     ).all()
 
-    print(results)
+    # prepare values TODO include date
+    # jsonify can't handle objects so we have to do this hack
+    values = [(row[0].strftime("%m/%d/%y"), row[1]) for row in results]
 
-    # TODO doesnt work
-    return jsonify(results)
+    response = jsonify(values)
+    response.headers.add("Access-Control-Allow-Origin", "*")  # for AJAX
+    return response

@@ -1,4 +1,10 @@
-function exercise_chart(elem_id, exercise_id) {
+async function request(url) {
+	const response = await fetch(url);
+
+	return response.json();
+}
+
+async function exercise_chart(elem_id, exercise_id, exercise_name) {
 	// Create initial chart
 	let chart = new Chart(document.getElementById(elem_id), {
 		type: 'line',
@@ -8,6 +14,12 @@ function exercise_chart(elem_id, exercise_id) {
 			pointStyle: 'circle',
 			pointRadius: 5,
 			pointHoverRadius: 10,
+			datasets: [{
+				label: exercise_name,
+				data: [],
+				fill: false,
+				tension: 0.1
+			}]
 		},
 		option: {
 			scales: {
@@ -19,4 +31,13 @@ function exercise_chart(elem_id, exercise_id) {
 	});
 
 	// Load chart data for exercise
+	const json = await request(`/api/progress/exercise/${exercise_id}`);
+
+	json.forEach(row => {
+		chart.data.datasets[0].data.push(row[1]);
+		chart.data.labels.push(row[0]);
+	});
+
+
+	chart.update();
 }
