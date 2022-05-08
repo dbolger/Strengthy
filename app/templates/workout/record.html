@@ -30,13 +30,13 @@
 						<th>{{ loop.index }}</th>
 						{% if exercise.type == 'time' %}
 						<td>
-							<div class='timer-{{ outer_loop.index }}'style="display:flex;align-items:center;font-size:1em;">
-								<button type="button" onclick="onClickPausePlayTimer(this)" class="button">
+							<div class='timer' style="display:flex;align-items:center;font-size:1em;">
+								<button id='timer-{{ outer_loop.index }}' type="button" onclick="onClickPausePlayTimer(this)" class="button">
 									<span class="icon is-small">
 										<i class="fa fa-play"></i>
 									</span>
 								</button>
-								<span style='padding-left: 15px;' id='timer-time'>
+								<span style='padding-left: 15px;' id='timer-time-{{ outer_loop.index }}'>
 									{{ exercise.units }} seconds
 								</span>
 							</div>

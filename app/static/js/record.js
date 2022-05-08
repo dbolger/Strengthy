@@ -98,6 +98,11 @@ function setCheck(row) {
 		if (timerButton.children[0].children[0].classList.contains('fa-pause')) {
 			timerButton.children[0].children[0].classList.remove('fa-pause');
 			timerButton.children[0].children[0].classList.add('fa-play');
+			timers.get(timerButton.id).finished = true;
+		} else if (timerButton.children[0].children[0].classList.contains('fa-play')) {
+			timerButton.children[0].children[0].classList.remove('fa-play');
+			timerButton.children[0].children[0].classList.add('fa-pause');
+			timers.get(timerButton.id).finished = false;
 		}
 	} else {
 		// Disable input editing
@@ -108,17 +113,20 @@ function setCheck(row) {
 		row.children[1].firstChild.classList.add('is-success')
 		row.children[2].firstChild.classList.add('is-success')
 	}
+	doneButton = row.children[2].children[0];
+		doneButton.classList.add('is-success');
 }
 
 // Called when the check at the end of a set line is clicked
 function onClickSetCheck(elem) {
 	row = elem.parentElement.parentElement;
-	if (elem.classList.contains('is-success')) {
-		setReset(row, row.parentElement.children.length - 1, false);
-	} else {
-		elem.classList.add('is-success');
-		setCheck(elem.parentElement.parentElement);
-	}
+		if (elem.classList.contains('is-success')) {
+			setReset(row, row.parentElement.children.length - 1, false);
+		} else {
+			elem.classList.add('is-success');
+			setCheck(elem.parentElement.parentElement);
+		}
+
 }
 
 function onClickAddSet(elem) {
@@ -152,8 +160,9 @@ function runClock(timer) {
 		if (t.total <= 0 || timer.finished) {
 			clearInterval(timeInterval);
 			updateTimerButton(timer.elem);
-			onClickSetCheck(timer.elem.parentElement.parentElement.parentElement);
-			timer.finished = true;
+			onClickSetCheck(timer.elem.parentElement);
+			timer.elem.dataset.isActive = false;
+			timers.delete(timer.elem.id);
 		}
 	}
 	if (!timer.startedBefore) {
@@ -164,6 +173,7 @@ function runClock(timer) {
 	timeInterval = setInterval(updateClock, 100);
 	timer.intervalId = timeInterval;
 	// add a new map record
+	console.log(timer.elem.id);
 	timers.set(timer.elem.id, timer);
 }
 
@@ -178,29 +188,30 @@ function updateTimerButton(elem) {
 }
 
 function onClickPausePlayTimer(elem) {
-		// on press, if the button has not been pressed before
-		if (!elem.dataset.pressedBefore) {
-			// say it now has
-			elem.dataset.pressedBefore = true;
-			// create a new Timer object that represents the timer for this row
-			timer = new Timer();
-			timer.elem = elem;
-			timer.paused = true;
-			seconds = elem.parentElement.parentElement.parentElement.dataset.timerSeconds;
-			timer.finishDate = new Date(Date.parse(new Date()) + 1*seconds*1000);
-			console.log(timer.finishDate);
-		}
-		updateTimerButton(elem);
-		if (timer.paused) {
-			console.log('paused, starting...');
-			timer.paused = false;
-			// start/resume timer
-			resumeTimer(timer);
-		} else {
-			console.log('started, pausing...');
-			timer.paused = true;
-			// pause timer
-			pauseTimer(timer);
+	// on press, if the button is not currently active (in use)
+	if (elem.dataset.isActive == false || typeof elem.dataset.isActive == 'undefined') {
+		elem.dataset.isActive = true;
+		// create a new Timer object that represents the timer for this row
+		timer = new Timer();
+		timer.elem = elem;
+		timer.paused = true;
+		seconds = elem.parentElement.parentElement.parentElement.dataset.timerSeconds;
+		timer.finishDate = new Date(Date.parse(new Date()) + 1*seconds*1000);
+		console.log(timer.finishDate);
+	} else {
+		timer = timers.get(elem.id);
+	}
+	updateTimerButton(elem);
+	if (timer.paused) {
+		console.log('paused, starting...');
+		timer.paused = false;
+		// start/resume timer
+		resumeTimer(timer);
+	} else {
+		console.log('started, pausing...');
+		timer.paused = true;
+		// pause timer
+		pauseTimer(timer);
 	}
 }
 
@@ -218,8 +229,8 @@ function resumeTimer(timer) {
 }
 
 function pauseTimer(timer) {
+	console.log(timer);
 	intervalId = timers.get(timer.elem.id).intervalId;
 	clearInterval(intervalId);
 	timer.timeLeft = getTimeRemaining(timer.finishDate).total;
-	timers.delete(timer.elem.id);
 }
