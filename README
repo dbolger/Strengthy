@@ -1,0 +1,10 @@
+How to run:
+
+1. Install dependencies
+	$ pip install -r requirements.txt
+
+2. Change to app directory
+	$ cd app
+
+3. Start Flask
+	$ flask run
