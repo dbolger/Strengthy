@@ -75,6 +75,10 @@ class SetRecord(db.Model):
     # relationships
     exercise = db.relationship("Exercise")
 
+    # Calculates using https://www.athlegan.com/calculate-1rm
+    def one_rep_max(self):
+        return int(self.lbs / (1.0278 - (0.0278 * self.reps)))
+
 
 # Represents a recording of a workout
 class WorkoutRecord(db.Model):
@@ -95,3 +99,6 @@ class WorkoutRecord(db.Model):
         self.workout = workout
         self.finished = finished
         self.user = current_user
+
+    def finished_nice(self, fmt="%m/%d/%y %-I:%M %p"):
+        return self.finished.strftime(fmt)

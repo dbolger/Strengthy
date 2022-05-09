@@ -144,11 +144,35 @@ def workout_record(workout_id=None):
 @app.route("/workout/history/<record_id>")
 @login_required
 def workout_history(record_id=None):
-    record = WorkoutRecord.query.filter_by(
-        id=int(record_id), user_id=current_user.id
-    ).first()
-
-    if not record:
+    query = (
+        db.session.query(SetRecord)
+        .join(WorkoutRecord)
+        .filter(
+            WorkoutRecord.id == SetRecord.workout_record_id,
+            WorkoutRecord.user_id == current_user.id,
+            WorkoutRecord.id == record_id,
+        )
+        .order_by(SetRecord.exercise_id)
+        .all()
+    )
+    if not query:
         return redirect(url_for("home"))
 
-    return render_template("workout/history.html", record=record)
+    # Condense into format we want
+    # TODO: this should be handled by an ExerciseRecord class, but I don't have time for it
+    exercises = {}
+    for set in query:
+        if set.exercise_id in exercises:
+            exercises[set.exercise_id]["sets"].append(set)
+        else:
+            exercises[set.exercise_id] = {
+                "sets": [set],
+                "name": set.exercise.name,
+                "id": int(set.exercise.id),
+            }
+
+    return render_template(
+        "workout/history.html",
+        exercises=exercises.values(),
+        workout_record=query[0].workout_record,
+    )

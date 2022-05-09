@@ -1,29 +1,34 @@
 {% extends 'base/layout.html' %}
 
-{% block title %}Workout{% endblock %}
-
 {% block content %}
 <div class="container">
 	<div class="columns is-centered">
 		<div class="column">
-			<h1 class="title is-2">Workout</h1>
+			<h1 class="title is-2">{{ workout_record.workout.name }}</h1>
+			<h2 class="subtitle">{{ workout_record.finished_nice() }}</h2>
 			<div class="box">
-				<table class="table is-fullwidth is-hoverable">
-					<thead>
-						<th>Set</th>
-						<th>lbs</th>
-						<th>Reps</th>
-					</thead>
-					<tbody>
-						{% for set in record.sets %}
-							<tr>
-								<th></th>
-								<th>{{ set.lbs }}</th>
-								<th>{{ set.reps }}</th>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+				{% for exercise in exercises %}
+				<a class="button is-link is-pulled-right" href="/progress/exercise/{{ exercise.id }}">View Progress</a>
+					<h1 class="title is-4 has-text-black">{{ exercise.name }}</h1>
+					<table class="table is-fullwidth is-hoverable">
+						<thead>
+							<th>Set</th>
+							<th>lbs</th>
+							<th>Reps</th>
+							<th>1RM</th>
+						</thead>
+						<tbody>
+							{% for set in exercise.sets %}
+								<tr>
+									<th>{{ loop.index0 + 1 }}</th>
+									<th>{{ set.lbs }}</th>
+									<th>{{ set.reps }}</th>
+									<th>{{ set.one_rep_max() }}</th>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endfor %}
 			</div>
 		</div>
 	</div>

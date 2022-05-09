@@ -109,7 +109,7 @@
 								{% for record in records %}
 								<tr>
 									<td>{{ record.workout.name }}</td>
-									<td>{{ record.finished.strftime("%m/%d/%y %-I:%M %p") }}</td>
+									<td>{{ record.finished_nice() }}</td>
 									<td class="level-right"><a class="button is-small is-primary" href="/workout/history/{{ record.id }}">View</a></td>
 								</tr>
 								{% endfor %}
