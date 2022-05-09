@@ -131,6 +131,7 @@ def workout_record(workout_id=None):
 
         return redirect(url_for("home"))
     else:
+        print(form.errors)
         # Populate form with data
         for exercise in workout.exercises:
             form.exercises.append_entry(
