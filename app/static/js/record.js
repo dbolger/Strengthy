@@ -13,6 +13,13 @@ class Timer {
 		this.finished = false;
 	}
 
+	static fromElem(elem) {
+		if (!elem.timer) {
+			elem.timer = new Timer(elem);
+		}
+		return elem.timer;
+	}
+
 	setIcon(c) {
 		this.icon.classList.remove(...this.icon.classList);
 		this.icon.classList.add('fa');
@@ -87,6 +94,40 @@ class Timer {
 	}
 }
 
+class Set {
+	constructor(row) {
+		this.row = row;
+		if (row.dataset.isTimer) {
+			this.timer = Timer.fromElem(row.children[1].children[0].children[0]);
+		} else {
+			this.lbsInput = row.children[1].children[0];
+			this.repsInput = row.children[2].children[0];
+		}
+	}
+
+	static fromRow(row) {
+		if (!row.set) {
+			row.set = new Set(row);
+		}
+		return row.set;
+	}
+
+	// TODO
+	reset() {
+	}
+
+	check() {
+		if (self.timer) {
+			self.timer.finish();
+		} else {
+			this.lbsInput.disabled = true;
+			this.repsInput.disabled = true;
+		}
+
+		// TODO finish
+	}
+}
+
 // Get an arrayt of all inputs
 allInputs = Array.from(document.getElementsByClassName('input')).filter(e => e.type == 'number');
 
@@ -94,8 +135,6 @@ allInputs = Array.from(document.getElementsByClassName('input')).filter(e => e.t
 document.getElementById("form").addEventListener('submit', (el) => {
 	Array.from(event.target.getElementsByTagName('input')).forEach(i => i.disabled = false);
 });
-
-// Attach a timer to all 
 
 function setReset(row, index, values=true) {
 	if (row.dataset.isTimer) {
