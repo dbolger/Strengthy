@@ -1,5 +1,5 @@
 from app import app, db
-from flask import redirect, request, jsonify
+from flask import redirect, request, jsonify, url_for
 from flask_login import current_user, login_required
 from tables import Exercise, SetRecord, Workout, WorkoutRecord
 

@@ -134,7 +134,7 @@
 <script type="text/javascript" src="/static/js/chart.js"></script>
 <script>
 	{% for completed_workout in top3 %}
-	exercise_chart('chart-{{ loop.index }}', {{ top3[loop.index - 1].id }}, "{{ top3[loop.index - 1].name }}");
+	exercise_chart('chart-{{ loop.index }}', {{ top3[loop.index0].id }}, "{{ top3[loop.index0].name }}");
 	{% endfor %}
 </script>
 {% endblock %}
