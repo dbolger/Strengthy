@@ -1,25 +1,34 @@
 class Timer {
-	// TODO: remove
-	startedBefore;
-	buttonId;
-	timeLeft;
-
 	constructor(elem) {
 		// DOM stuff
 		this.elem = elem;
 		this.row = elem.parentElement.parentElement.parentElement;
-		this.button = elem.children[0].children[0];
+		this.icon = elem.children[0].children[0];
 		this.time_span = elem.parentElement.children[1];
 
-		this.seconds = this.row.dataset.timerSeconds;
+		this.length = this.row.dataset.timerSeconds;
+		this.secondsLeft = this.length;
 		this.interval = null;
 		this.paused = true;
 		this.finished = false;
 	}
 
-	toggle() {
+	setIcon(c) {
+		this.icon.classList.remove(...this.icon.classList);
+		this.icon.classList.add('fa');
+		this.icon.classList.add(c);
+	}
+
+	drawTime() {
+		const minutes = String(parseInt(this.secondsLeft / 60)).padStart(2, '0');
+		const seconds = String(parseInt(this.secondsLeft % 60)).padStart(2, '0');
+		this.time_span.innerHTML = `${minutes}:${seconds}`;
+	}
+
+	// Button is pressed for timer
+	press() {
 		if (this.finished) {
-			return;
+			this.reset();
 		} else if (this.paused) {
 			this.play();
 		} else {
@@ -27,6 +36,7 @@ class Timer {
 		}
 	}
 
+	// Start the timer
 	play() {
 		console.log("Playing...");
 		this.paused = false;
@@ -34,20 +44,20 @@ class Timer {
 		// Run this code every 1 second
 		this.interval = setInterval(() => {
 			// Update time
-			this.seconds--;
-			this.time_span.innerHTML = `${parseInt(this.seconds / 60)}:${this.seconds % 60}`;
+			this.secondsLeft--;
+			this.drawTime();
 
 			// Check for finish
-			if (this.seconds <= 0) {
+			if (this.secondsLeft <= 0) {
 				this.finish();
 			}
 		}, 1000);
 
 		// Update button
-		this.button.classList.remove('fa-play');
-		this.button.classList.add('fa-pause');
+		this.setIcon('fa-pause');
 	}
 
+	// Pause timer
 	pause() {
 		console.log("Pausing...");
 		this.paused = true;
@@ -56,16 +66,24 @@ class Timer {
 		clearInterval(this.interval);
 
 		// Update button
-		this.button.classList.remove('fa-pause');
-		this.button.classList.add('fa-play');
+		this.setIcon('fa-play');
 	}
 
+	// Finish timer
 	finish() {
-		console.log("Finished...")
+		console.log("Finished...");
 		this.finished = true;
+		this.pause();
 
-		// Stop interval
-		clearInterval(this.interval);
+		this.setIcon('fa-refresh');
+	}
+
+	reset() {
+		this.paused = true;
+		this.finished = false;
+		this.secondsLeft = this.length;
+		this.drawTime();
+		this.setIcon('fa-play');
 	}
 }
 
@@ -131,19 +149,14 @@ function setSetid(row, id) {
 }
 
 function setCheck(row) {
+	// TODO: better way to check
 	if (row.dataset.isTimer) {
-		timerButton = row.children[1].children[0].children[0];
+		const timerButton = row.children[1].children[0].children[0];
+		if (timerButton.timer) {
+			timerButton.timer.finish();
+		}
 		timerButton.disabled = true;
 		timerButton.classList.add('is-success');
-		if (timerButton.children[0].children[0].classList.contains('fa-pause')) {
-			timerButton.children[0].children[0].classList.remove('fa-pause');
-			timerButton.children[0].children[0].classList.add('fa-play');
-			timers.get(timerButton.id).finished = true;
-		} else if (timerButton.children[0].children[0].classList.contains('fa-play')) {
-			timerButton.children[0].children[0].classList.remove('fa-play');
-			timerButton.children[0].children[0].classList.add('fa-pause');
-			timers.get(timerButton.id).finished = false;
-		}
 	} else {
 		// Disable input editing
 		row.children[1].firstChild.disabled = true;
@@ -153,8 +166,9 @@ function setCheck(row) {
 		row.children[1].firstChild.classList.add('is-success')
 		row.children[2].firstChild.classList.add('is-success')
 	}
+
 	doneButton = row.children[2].children[0];
-		doneButton.classList.add('is-success');
+	doneButton.classList.add('is-success');
 }
 
 // ----- ----- CALLBACKS ----- ----- //
@@ -165,7 +179,7 @@ function onClickPausePlayTimer(elem) {
 	}
 
 	// Toggle timer
-	elem.timer.toggle();
+	elem.timer.press();
 }
 
 function onKeyDown(event) {
@@ -200,7 +214,6 @@ function onClickAddSet(elem) {
 	// Add new row to table
 	setReset(row, tableBody.children.length, false);
 	setSetid(row, tableBody.children.length)
-	row.addEventListener('keydown', handleEnterKey)
 	tableBody.appendChild(row)
 }
 
