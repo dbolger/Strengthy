@@ -1,9 +1,72 @@
-timers = new Map([]);
 class Timer {
+	// TODO: remove
 	startedBefore;
 	buttonId;
 	timeLeft;
-	finish;
+
+	constructor(elem) {
+		// DOM stuff
+		this.elem = elem;
+		this.row = elem.parentElement.parentElement.parentElement;
+		this.button = elem.children[0].children[0];
+		this.time_span = elem.parentElement.children[1];
+
+		this.seconds = this.row.dataset.timerSeconds;
+		this.interval = null;
+		this.paused = true;
+		this.finished = false;
+	}
+
+	toggle() {
+		if (this.finished) {
+			return;
+		} else if (this.paused) {
+			this.play();
+		} else {
+			this.pause();
+		}
+	}
+
+	play() {
+		console.log("Playing...");
+		this.paused = false;
+
+		// Run this code every 1 second
+		this.interval = setInterval(() => {
+			// Update time
+			this.seconds--;
+			this.time_span.innerHTML = `${parseInt(this.seconds / 60)}:${this.seconds % 60}`;
+
+			// Check for finish
+			if (this.seconds <= 0) {
+				this.finish();
+			}
+		}, 1000);
+
+		// Update button
+		this.button.classList.remove('fa-play');
+		this.button.classList.add('fa-pause');
+	}
+
+	pause() {
+		console.log("Pausing...");
+		this.paused = true;
+
+		// Stop interval
+		clearInterval(this.interval);
+
+		// Update button
+		this.button.classList.remove('fa-pause');
+		this.button.classList.add('fa-play');
+	}
+
+	finish() {
+		console.log("Finished...")
+		this.finished = true;
+
+		// Stop interval
+		clearInterval(this.interval);
+	}
 }
 
 // Get an arrayt of all inputs
@@ -14,29 +77,7 @@ document.getElementById("form").addEventListener('submit', (el) => {
 	Array.from(event.target.getElementsByTagName('input')).forEach(i => i.disabled = false);
 });
 
-function handleEnterKey(event) {
-	if (event.key === "Enter" || event.key === "Tab") {
-		event.preventDefault();
-
-		//Isolate the node that we're after
-		const currentNode = event.target;
-		//Find the current tab index.
-		currentIndex = [...allInputs].findIndex(el => currentNode.isEqualNode(el));
-
-		//focus the following element
-		const targetIndex = (currentIndex + 1) % allInputs.length;
-		const targetNode = allInputs[targetIndex];
-
-		if (!targetNode.parentElement.parentElement.isEqualNode(currentNode.parentElement.parentElement)) {
-			// going to new row
-			if (currentNode.value != "" && allInputs[currentIndex-1].value != "") {
-				onClickSetCheck(currentNode.parentElement.parentElement.children[3].children[0]);
-			}
-		}
-
-		targetNode.focus();
-	}
-}
+// Attach a timer to all 
 
 function setReset(row, index, values=true) {
 	if (row.dataset.isTimer) {
@@ -116,22 +157,45 @@ function setCheck(row) {
 		doneButton.classList.add('is-success');
 }
 
-// Called when the check at the end of a set line is clicked
-function onClickSetCheck(elem) {
-	row = elem.parentElement.parentElement;
-		if (elem.classList.contains('is-success')) {
-			setReset(row, row.parentElement.children.length - 1, false);
-		} else {
-			elem.classList.add('is-success');
-			setCheck(elem.parentElement.parentElement);
+// ----- ----- CALLBACKS ----- ----- //
+function onClickPausePlayTimer(elem) {
+	// Create new timer object if one does not exist
+	if (!elem.timer) {
+		elem.timer = new Timer(elem);
+	}
+
+	// Toggle timer
+	elem.timer.toggle();
+}
+
+function onKeyDown(event) {
+	if (event.key === "Enter" || event.key === "Tab") {
+		event.preventDefault();
+
+		//Isolate the node that we're after
+		const currentNode = event.target;
+		//Find the current tab index.
+		currentIndex = [...allInputs].findIndex(el => currentNode.isEqualNode(el));
+
+		//focus the following element
+		const targetIndex = (currentIndex + 1) % allInputs.length;
+		const targetNode = allInputs[targetIndex];
+
+		if (!targetNode.parentElement.parentElement.isEqualNode(currentNode.parentElement.parentElement)) {
+			// going to new row
+			if (currentNode.value != "" && allInputs[currentIndex-1].value != "") {
+				onClickSetCheck(currentNode.parentElement.parentElement.children[3].children[0]);
+			}
 		}
 
+		targetNode.focus();
+	}
 }
 
 function onClickAddSet(elem) {
 	// Create the new row
-	let tableBody = elem.parentElement.parentElement.children[0].children[1];
-	let row = tableBody.children[0].cloneNode(true);
+	const tableBody = elem.parentElement.parentElement.children[0].children[1];
+	const row = tableBody.children[0].cloneNode(true);
 
 	// Add new row to table
 	setReset(row, tableBody.children.length, false);
@@ -140,96 +204,14 @@ function onClickAddSet(elem) {
 	tableBody.appendChild(row)
 }
 
-function getTimeRemaining(end) {
-	var t = Date.parse(end) - Date.parse(new Date());
-	var seconds = Math.floor((t/1000) % 60);
-	var minutes = Math.floor((t/1000/60) % 60);
-	return { 'total': t,
-		'minutes': minutes,
-		'seconds': seconds,
-	};
-}
+function onClickSetCheck(elem) {
+	const row = elem.parentElement.parentElement;
 
-function runClock(timer) {
-	var timeInterval;
-	function updateClock() {
-		var t = getTimeRemaining(timer.finishDate);
-		timer_time = document.getElementById(timer.elem.parentElement.children[1].id);
-		timer_time.innerHTML = t.minutes.toString().padStart(2, "0") + ':' + t.seconds.toString().padStart(2, "0");
-		if (t.total <= 0 || timer.finished) {
-			clearInterval(timeInterval);
-			updateTimerButton(timer.elem);
-			onClickSetCheck(timer.elem.parentElement);
-			timer.elem.dataset.isActive = false;
-			timers.delete(timer.elem.id);
-		}
-	}
-	if (!timer.startedBefore) {
-		// if its never been started before say it now has
-		timer.startedBefore = true;
-	}
-	// create a new timeInterval for this element
-	timeInterval = setInterval(updateClock, 100);
-	timer.intervalId = timeInterval;
-	// add a new map record
-	console.log(timer.elem.id);
-	timers.set(timer.elem.id, timer);
-}
-
-function updateTimerButton(elem) {
-	if (elem.children[0].children[0].classList.contains('fa-play')) {
-		elem.children[0].children[0].classList.remove('fa-play');
-		elem.children[0].children[0].classList.add('fa-pause');
+	if (elem.classList.contains('is-success')) {
+		setReset(row, row.parentElement.children.length - 1, false);
 	} else {
-		elem.children[0].children[0].classList.add('fa-play');
-		elem.children[0].children[0].classList.remove('fa-pause');
+		elem.classList.add('is-success');
+		setCheck(elem.parentElement.parentElement);
 	}
 }
 
-function onClickPausePlayTimer(elem) {
-	// on press, if the button is not currently active (in use)
-	if (elem.dataset.isActive == false || typeof elem.dataset.isActive == 'undefined') {
-		elem.dataset.isActive = true;
-		// create a new Timer object that represents the timer for this row
-		timer = new Timer();
-		timer.elem = elem;
-		timer.paused = true;
-		seconds = elem.parentElement.parentElement.parentElement.dataset.timerSeconds;
-		timer.finishDate = new Date(Date.parse(new Date()) + 1*seconds*1000);
-		console.log(timer.finishDate);
-	} else {
-		timer = timers.get(elem.id);
-	}
-	updateTimerButton(elem);
-	if (timer.paused) {
-		console.log('paused, starting...');
-		timer.paused = false;
-		// start/resume timer
-		resumeTimer(timer);
-	} else {
-		console.log('started, pausing...');
-		timer.paused = true;
-		// pause timer
-		pauseTimer(timer);
-	}
-}
-
-function resumeTimer(timer) {
-	var finish;
-	if (typeof timer.timeLeft !== 'undefined') {
-		// if we have set the time left before, then use that time
-		finish = new Date(Date.parse(new Date()) + timer.timeLeft);
-		timer.finishDate = finish;
-	} else {
-		// otherwise, this is first run, so use finishDate
-		finish = new Date(Date.parse(timer.finishDate));
-	}
-	runClock(timer, finish);
-}
-
-function pauseTimer(timer) {
-	console.log(timer);
-	intervalId = timers.get(timer.elem.id).intervalId;
-	clearInterval(intervalId);
-	timer.timeLeft = getTimeRemaining(timer.finishDate).total;
-}
