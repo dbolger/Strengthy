@@ -1,0 +1,3 @@
+/workout/record:
+	First timer is started regardless of which is pushed
+	Timers don't automatically done a row

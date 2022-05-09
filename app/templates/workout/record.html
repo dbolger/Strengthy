@@ -42,8 +42,8 @@
 							</div>
 						</td>
 						{% else %}
-						<td>{{ set['lbs'](class_='input') }}</td>
-						<td>{{ set['units'](class_='input') }}</td>
+						<td>{{ set['lbs'](class_='input', onkeydown='handleEnterKey(event)') }}</td>
+						<td>{{ set['units'](class_='input', onkeydown='handleEnterKey(event)') }}</td>
 						{% endif %}
 						<td>
 							<a class="button" onClick="onClickSetCheck(this)">

@@ -6,11 +6,10 @@ class Timer {
 	finish;
 }
 
-// Register 'Enter' listeners on all inputs
-allInputs = Array.from(document.getElementsByClassName('input'))
-	.filter(e => e.type == 'number');
-allInputs.forEach(e => e.addEventListener('keydown', handleEnterKey));
-// Register onsubmit handler for form
+// Get an arrayt of all inputs
+allInputs = Array.from(document.getElementsByClassName('input')).filter(e => e.type == 'number');
+
+// Register onsubmit handler for form (NOTE: unfortunatly not a better way to do this)
 document.getElementById("form").addEventListener('submit', (el) => {
 	Array.from(event.target.getElementsByTagName('input')).forEach(i => i.disabled = false);
 });
@@ -83,9 +82,9 @@ function setReset(row, index, values=true) {
 
 function setSetid(row, id) {
 	let setNumber = row.children[0];
-	let lbsInput = row.children[1].children[0];
-	let repsInput = row.children[2].children[0];
-	let doneButton = row.children[3].children[0];
+	//let lbsInput = row.children[1].children[0];
+	//let repsInput = row.children[2].children[0];
+	//let doneButton = row.children[3].children[0];
 
 	setNumber.textContent = id + 1;
 }
