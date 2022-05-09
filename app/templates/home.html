@@ -9,8 +9,7 @@
 				<h1 class="title">
 					Hello {{ current_user.username }}
 				</h1>
-				<h2 class="subtitle">
-					Welcome to your home.
+				<h2 class="subtitle"> Welcome to your home.
 				</h2>
 			</div>
 		</div>
@@ -20,12 +19,10 @@
 			<div class="tile is-parent">
 				<article class="tile is-child box">
 					<p class="title has-text-black">{{ current_user.workouts.count() }}</p>
-					<p class="subtitle has-text-black">Workouts</p>
-				</article>
-			</div>
+					<p class="subtitle has-text-black">Workouts</p> </article> </div>
 			<div class="tile is-parent">
 				<article class="tile is-child box">
-					<p class="title has-text-black">{{ records.count()  }}</p>
+					<p class="title has-text-black">{{ records|length }}</p>
 					<p class="subtitle has-text-black">Workouts Completed</p>
 				</article>
 			</div>
@@ -36,12 +33,12 @@
 				</article>
 			</div>
 			<!-- Something else?
-			<div class="tile is-parent">
+				<div class="tile is-parent">
 				<article class="tile is-child box">
-					<p class="title">19</p>
-					<p class="subtitle">Exceptions</p>
+				<p class="title">19</p>
+				<p class="subtitle">Exceptions</p>
 				</article>
-			</div> -->
+				</div> -->
 		</div>
 	</section>
 	<div class="columns">
@@ -49,7 +46,7 @@
 			<div class="card events-card">
 				<header class="card-header">
 					<p class="card-header-title">
-						My Workouts
+					My Workouts
 					</p>
 				</header>
 				<div class="card-table">
@@ -57,34 +54,34 @@
 						<table class="table is-fullwidth is-striped">
 							<tbody>
 								{% for workout in current_user.workouts %}
-									<tr>
-										<td>{{ workout.name }}</td>
-										<td>{{ workout.exercises.count() }} exercises</td>
-										<td class="level-right">
-											<p class="buttons">
-												<a class="button is-small is-primary" href="/workout/record/{{ workout.id }}">Record</a>
-												<a class="button is-small is-info" href="/workout/edit/{{ workout.id }}">Edit</a>
-												<a class="button is-small is-danger js-modal-trigger" data-target="modal-{{ workout.id }}" href="#">Delete</a>
+								<tr>
+									<td>{{ workout.name }}</td>
+									<td>{{ workout.exercises.count() }} exercises</td>
+									<td class="level-right">
+										<p class="buttons">
+										<a class="button is-small is-primary" href="/workout/record/{{ workout.id }}">Record</a>
+										<a class="button is-small is-info" href="/workout/edit/{{ workout.id }}">Edit</a>
+										<a class="button is-small is-danger js-modal-trigger" data-target="modal-{{ workout.id }}" href="#">Delete</a>
+										</p>
+									</td>
+								</tr>
+								<!-- Confirmation Modal -->
+								<div class="modal" id="modal-{{ workout.id }}">
+									<div class="modal-background"></div>
+									<div class="modal-card">
+										<section class="modal-card-body">
+											<h1 class="title has-text-black">Are you sure?</h1>
+											<p>
+											Are you sure you want to delete this workout?
+											You will not be able to restore it once you do.
 											</p>
-										</td>
-									</tr>
-									<!-- Confirmation Modal -->
-									<div class="modal" id="modal-{{ workout.id }}">
-										<div class="modal-background"></div>
-										<div class="modal-card">
-											<section class="modal-card-body">
-												<h1 class="title has-text-black">Are you sure?</h1>
-												<p>
-													Are you sure you want to delete this workout?
-													You will not be able to restore it once you do.
-												</p>
-											</section>
-											<footer class="modal-card-foot">
-												<a href="/api/workout/delete?id={{ workout.id }}" class="button is-danger">Confirm</a>
-												<button class="button">Cancel</button>
-											</footer>
-										</div>
+										</section>
+										<footer class="modal-card-foot">
+											<a href="/api/workout/delete?id={{ workout.id }}" class="button is-danger">Confirm</a>
+											<button class="button">Cancel</button>
+										</footer>
 									</div>
+								</div>
 								{% endfor %}
 							</tbody>
 						</table>
@@ -99,7 +96,7 @@
 			<div class="card events-card">
 				<header class="card-header">
 					<p class="card-header-title">
-						Recent Workouts
+					Recent Workouts
 					</p>
 				</header>
 				<div class="card-table">
@@ -118,35 +115,26 @@
 					</div>
 				</div>
 				<footer class="card-footer">
-					<a href="#" class="card-footer-item">View All</a>
+					<p class='card-footer-item'>{{ records|length }} Recent Workouts</p>
 				</footer>
 			</div>
 		</div>
 	</div>
 	<div class="columns">
+		{% for completed_workout in top3 %}
 		<div class="column is-4">
 			<div class="box">
-					<canvas id="chart-1">
+				<canvas id="chart-{{ loop.index }}">
 			</div>
 		</div>
-		<div class="column is-4">
-			<div class="box">
-					<canvas id="chart-2">
-			</div>
-		</div>
-		<div class="column is-4">
-			<div class="box">
-					<canvas id="chart-3">
-			</div>
-		</div>
+		{% endfor %}
 	</div>
 </div>
 
 <script type="text/javascript" src="/static/js/chart.js"></script>
 <script>
-// TODO top 3
-	exercise_chart('chart-1', {{ top3[0].id }}, "{{ top3[0].name }}");
-	exercise_chart('chart-2', {{ top3[1].id }}, "{{ top3[1].name }}");
-	exercise_chart('chart-3', {{ top3[2].id }}, "{{ top3[2].name }}");
+	{% for completed_workout in top3 %}
+	exercise_chart('chart-{{ loop.index }}', {{ top3[loop.index - 1].id }}, "{{ top3[loop.index - 1].name }}");
+	{% endfor %}
 </script>
 {% endblock %}
