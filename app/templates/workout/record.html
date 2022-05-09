@@ -5,6 +5,7 @@
 {% block form %}
 <div>
 	{% for exercise in workout.exercises %}
+	{% set outer_loop = loop %}
 	{{ form.exercises.entries[loop.index0]['id'] }}
 	<h1 class="title is-4 has-text-black">{{ exercise.name }}</h1>
 	<div>
@@ -21,33 +22,38 @@
 			</thead>
 			<tbody>
 				{% for set in form.exercises.entries[loop.index0].sets.entries %}
-				<tr>
-					<th>{{ loop.index }}</th>
-					{% if exercise.type == 'time' %}
-					<td>
-						<div class="timer">
-							<a class="button" onClick="onClickPausePlayTimer(this)">
+				{% if exercise.type == 'time' %}
+				<tr data-is-timer=true data-timer-seconds={{ exercise.units}}>
+					{% else %}
+					<tr data-is-reps=true>
+						{% endif %}
+						<th>{{ loop.index }}</th>
+						{% if exercise.type == 'time' %}
+						<td>
+							<div class='timer' style="display:flex;align-items:center;font-size:1em;">
+								<button id='timer-{{ outer_loop.index }}' type="button" onclick="onClickPausePlayTimer(this)" class="button">
+									<span class="icon is-small">
+										<i class="fa fa-play"></i>
+									</span>
+								</button>
+								<span style='padding-left: 15px;' id='timer-time-{{ outer_loop.index }}'>
+									{{ exercise.units }} seconds
+								</span>
+							</div>
+						</td>
+						{% else %}
+						<td>{{ set['lbs'](class_='input') }}</td>
+						<td>{{ set['units'](class_='input') }}</td>
+						{% endif %}
+						<td>
+							<a class="button" onClick="onClickSetCheck(this)">
 								<span class="icon is-small">
-									<i class="fa fa-play"></i>
+									<i class="fa fa-check"></i>
 								</span>
 							</a>
-							<span class="{{ ['units'] }}">
-							</span>
-						</div>
-					</td>
-					{% else %}
-					<td>{{ set['lbs'](class_='input') }}</td>
-					<td>{{ set['units'](class_='input') }}</td>
-					{% endif %}
-					<td>
-						<a class="button" onClick="onClickSetCheck(this)">
-							<span class="icon is-small">
-								<i class="fa fa-check"></i>
-							</span>
-						</a>
-					</td>
-				</tr>
-				{% endfor %}
+						</td>
+					</tr>
+					{% endfor %}
 			</tbody>
 		</table>
 		<div class="buttons is-centered">
