@@ -18,13 +18,23 @@ async function exercise_chart(elem_id, exercise_id, exercise_name) {
 				label: exercise_name,
 				data: [],
 				fill: false,
+				borderColor: 'rgb(75, 192, 192)',
 				tension: 0.1
 			}]
 		},
-		option: {
+		options: {
 			scales: {
 				y: {
 					beginAtZero: true
+				}
+			},
+			plugins: {
+				legend: {
+					labels: {
+						font:  {
+							size: 18
+						}
+					}
 				}
 			}
 		}
