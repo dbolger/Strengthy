@@ -24,9 +24,6 @@
 
 <div id="rows" class="field">
 	{% for entry in form.exercises.entries %}
-	{% if workout %}
-		{{ entry['id']() }}
-	{% endif %}
 	<div class="field is-horizontal">
 		<div class="field-body">
 			<div class="field">
@@ -53,13 +50,13 @@
 			<div class="field has-addons">
 				 <div class="control has-icons-left">
 					<div class="select">
-						{{ entry['type'] }}
+						{{ entry['type'](oninput='handleChange(this)') }}
 					</div>
 					<div class="icon is-small is-left">
 						<i class="fa fa-calculator"></i>
 					</div>
 				</div>
-				{{ entry['units'](class_='input', placeholder="Reps") }}
+				{{ entry['units'](class_='input', placeholder='Reps') }}
 			</div>
 			<p class="button is-danger" onclick="handleDel(this)">
 				<span class="icon is-small">
@@ -68,6 +65,9 @@
 			</p>
 		</div>
 	</div>
+	{% if workout %}
+		{{ entry['id']() }}
+	{% endif %}
 	{% endfor %}
 </div>
 

@@ -32,22 +32,16 @@ function handleDel(elem) {
 	}
 }
 
-document.getElementById("add").onclick = handleAdd;
-
 function handleChange(elem) {
-	if (elem.target.value == 'time') {
-		elem.target.parentNode.parentNode.parentNode.children[1].placeholder = "Time (in seconds)";
-		elem.target.parentNode.parentNode.parentNode.children[1].selected = true;
-		elem.target.parentNode.parentNode.children[1].children[0].classList.remove('fa-calculator');
-		elem.target.parentNode.parentNode.children[1].children[0].classList.add('fa-clock-o');
-	} else if (elem.target.value == 'reps') {
-		elem.target.parentNode.parentNode.children[1].children[0].classList.add('fa-calculator');
-		elem.target.parentNode.parentNode.children[1].children[0].classList.remove('fa-clock-o');
-		elem.target.parentNode.parentNode.parentNode.children[1].selected = true;
-		elem.target.parentNode.parentNode.parentNode.children[1].placeholder = "Reps";
+	if (elem.value == 'time') {
+		elem.parentNode.parentNode.parentNode.children[1].placeholder = "Time (in seconds)";
+		elem.parentNode.parentNode.parentNode.children[1].selected = true;
+		elem.parentNode.parentNode.children[1].children[0].classList.remove('fa-calculator');
+		elem.parentNode.parentNode.children[1].children[0].classList.add('fa-clock-o');
+	} else if (elem.value == 'reps') {
+		elem.parentNode.parentNode.children[1].children[0].classList.add('fa-calculator');
+		elem.parentNode.parentNode.children[1].children[0].classList.remove('fa-clock-o');
+		elem.parentNode.parentNode.parentNode.children[1].selected = true;
+		elem.parentNode.parentNode.parentNode.children[1].placeholder = "Reps";
 	}
-}
-
-for (row of rowsDiv.children) {
-	row.children[0].children[2].children[0].children[0].children[0].addEventListener('input', handleChange);
 }
