@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template
 from flask_login import current_user, login_required
-from tables import Workout, WorkoutRecord, SetRecord
+from tables import Workout, Exercise, WorkoutRecord, SetRecord
 
 
 @app.route("/", methods=["GET"])
@@ -12,13 +12,14 @@ def index():
 @app.route("/home", methods=["GET"])
 @login_required
 def home():
-    # Prepare so we don't have to do this in the template
+    # Workout records
     records = (
         db.session.query(WorkoutRecord)
         .filter_by(user_id=current_user.id)
         .order_by(WorkoutRecord.finished.desc())
     )
 
+    # Set records length
     sets_completed = (
         db.session.query(SetRecord, WorkoutRecord)
         .filter(
@@ -28,4 +29,17 @@ def home():
         .count()
     )
 
-    return render_template("home.html", records=records, sets_completed=sets_completed)
+    # Top 3 exercises (by frequency)
+    top3 = (
+        db.session.query(Exercise)
+        .join(SetRecord)
+        .filter(SetRecord.exercise_id == Exercise.id)
+        .group_by(Exercise.id)
+        .order_by(db.func.count(SetRecord.id).desc())
+        .limit(3)
+        .all()
+    )
+
+    return render_template(
+        "home.html", records=records, sets_completed=sets_completed, top3=top3
+    )

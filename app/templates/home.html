@@ -125,79 +125,28 @@
 	</div>
 	<div class="columns">
 		<div class="column is-4">
-			<div class="card">
-				<canvas id="chart-1"></canvas>
-				<footer class="card-footer">
-					<p class="card-footer-item">
-						<span>
-							Graph #1
-						</span>
-					</p>
-				</footer>
+			<div class="box">
+					<canvas id="chart-1">
 			</div>
 		</div>
 		<div class="column is-4">
-			<div class="card">
-				<div class="card-content">
-					<p class="title">
-						FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER
-						FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER
-					</p>
-				</div>
-				<footer class="card-footer">
-					<p class="card-footer-item">
-						<span>
-							Graph #2
-						</span>
-					</p>
-				</footer>
+			<div class="box">
+					<canvas id="chart-2">
 			</div>
 		</div>
 		<div class="column is-4">
-			<div class="card">
-				<div class="card-content">
-					<p class="title">
-						FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER
-						FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER FILLER
-					</p>
-				</div>
-				<footer class="card-footer">
-					<p class="card-footer-item">
-						<span>
-							Graph #3
-						</span>
-					</p>
-				</footer>
+			<div class="box">
+					<canvas id="chart-3">
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript" src="/static/js/chart.js"></script>
 <script>
-
-const ctx = document.getElementById('chart-1');
-const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['01/01/22', '01/02/22', '02/01/22', '03/01/22', '04/01/22', '05/01/22', '06/01/22', '07/01/22'],
-        datasets: [{
-            label: 'Bench Press',
-            data: [125, 145, 185, 185, 200, 205, 205],
-            borderWidth: 1,
-			cubicInterpolationMode: 'monotone',
-			tension: 0.4,
-			pointStyle: 'circle',
-			pointRadius: 5,
-			pointHoverRadius: 10
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-
+// TODO top 3
+	exercise_chart('chart-1', {{ top3[0].id }}, "{{ top3[0].name }}");
+	exercise_chart('chart-2', {{ top3[1].id }}, "{{ top3[1].name }}");
+	exercise_chart('chart-3', {{ top3[2].id }}, "{{ top3[2].name }}");
 </script>
 {% endblock %}
