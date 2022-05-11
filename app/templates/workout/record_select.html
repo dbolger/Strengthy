@@ -13,7 +13,7 @@
 					<div class="content">
 						Exercises:
 						{% for exercise in workout.exercises %}
-						<p>{{ exercise.sets }} x {{ exercise.units }} x {{ exercise.name }}</p>
+						<p>{{ exercise.sets }} x {{ exercise.units }}{% if exercise.type =='time' %} seconds{% endif %} x {{ exercise.name }}</p>
 						{% endfor %}
 							<a class="button is-primary" href="/workout/record/{{ workout.id }}">
 								<span class="icon is-small">
