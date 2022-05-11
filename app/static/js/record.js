@@ -251,7 +251,7 @@ function onClickAddSet(elem) {
 	const row = tableBody.children[0].cloneNode(true);
 
 	// Add new row to table
-	setReset(row, tableBody.children.length, false);
+	setReset(row, tableBody.children.length, true);
 	setSetid(row, tableBody.children.length)
 	tableBody.appendChild(row)
 }
