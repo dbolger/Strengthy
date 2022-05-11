@@ -4,6 +4,7 @@ from wtforms import (
     FormField,
     HiddenField,
     IntegerField,
+    FloatField,
     SelectField,
     StringField,
 )
@@ -14,7 +15,7 @@ class ExerciseCreateForm(Form):
     id = HiddenField("id", [Optional()])
     name = StringField("name", [DataRequired()])
     sets = IntegerField("sets", [DataRequired()])
-    units = IntegerField("units", [DataRequired()])
+    units = FloatField("units", [DataRequired()])
     type = SelectField(
         "type", [DataRequired()], choices=[("reps", "Reps"), ("time", "Time")]
     )
@@ -27,7 +28,7 @@ class WorkoutCreateForm(FlaskForm):
 
 #  /workout/record
 class SetForm(Form):
-    lbs = IntegerField("lbs", [Optional()])
+    lbs = FloatField("lbs", [Optional()])
     units = IntegerField("units", [Optional()])
 
 

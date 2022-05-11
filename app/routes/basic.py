@@ -17,6 +17,7 @@ def home():
         db.session.query(WorkoutRecord)
         .filter_by(user_id=current_user.id)
         .order_by(WorkoutRecord.finished.desc())
+        .all()
     )
 
     # Set records length
@@ -36,6 +37,7 @@ def home():
         .filter(SetRecord.exercise_id == Exercise.id)
         .group_by(Exercise.id)
         .order_by(db.func.count(SetRecord.id).desc())
+        .having(db.func.count(SetRecord.id) > 1)
         .limit(3)
         .all()
     )
