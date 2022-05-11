@@ -106,7 +106,7 @@
 					<div class="content">
 						<table class="table is-fullwidth is-striped">
 							<tbody>
-								{% for record in records %}
+								{% for record in records[:10] %}
 								<tr>
 									<td>{{ record.workout.name }}</td>
 									<td>{{ record.finished_nice() }}</td>
