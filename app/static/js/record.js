@@ -236,7 +236,7 @@ function onKeyDown(event) {
 
 		if (!targetNode.parentElement.parentElement.isEqualNode(currentNode.parentElement.parentElement)) {
 			// going to new row
-			if (currentNode.value != "" && allInputs[currentIndex-1].value != "") {
+			if (currentNode.value != "" && allInputs[currentIndex - 1].value && allINputs[currentIndex - 1] != "") {
 				onClickSetCheck(currentNode.parentElement.parentElement.children[3].children[0]);
 			}
 		}
