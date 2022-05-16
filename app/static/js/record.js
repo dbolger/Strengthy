@@ -78,11 +78,17 @@ class Timer {
 
 	// Finish timer
 	finish() {
+		if (this.finished) {
+			return;
+		}
 		console.log("Finished...");
 		this.finished = true;
 		this.pause();
 
 		this.setIcon('fa-refresh');
+		this.elem.disabled = true;
+		this.elem.classList.add('is-success')
+		setCheck(this.row);
 	}
 
 	reset() {
@@ -191,11 +197,7 @@ function setCheck(row) {
 	// TODO: better way to check
 	if (row.dataset.isTimer) {
 		const timerButton = row.children[1].children[0].children[0];
-		if (timerButton.timer) {
-			timerButton.timer.finish();
-		}
-		timerButton.disabled = true;
-		timerButton.classList.add('is-success');
+		Timer.fromElem(timerButton).finish();
 	} else {
 		// Disable input editing
 		row.children[1].firstChild.disabled = true;
