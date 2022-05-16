@@ -40,7 +40,9 @@ def api_progress_exercise(exercise_id=None):
             SetRecord.exercise_id == exercise_id,
             WorkoutRecord.user_id == current_user.id,
             SetRecord.workout_record_id == WorkoutRecord.id,
-        ).group_by(WorkoutRecord.id)
+        )
+        .group_by(WorkoutRecord.id)
+        .order_by(WorkoutRecord.finished)
     ).all()
 
     # prepare values TODO include date
