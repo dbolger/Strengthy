@@ -64,6 +64,9 @@ exercise_ids = {}
 
 
 def insert_workout(cur, workout):
+    if len(workout["sets"]) == 0:
+        return
+
     cur.execute(
         "INSERT INTO workout_records(finished, user_id, workout_id) VALUES (?, ?, ?)",
         (
