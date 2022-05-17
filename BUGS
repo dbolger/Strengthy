@@ -1,5 +1,3 @@
 /workout/record:
-	Timers don't automatically done a row
 	Timer data isn't written to database
-	New sets don't have values cleared
-	Tab does not work for new sets
+
