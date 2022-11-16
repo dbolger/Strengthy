@@ -1,4 +1,7 @@
 from flask_wtf import FlaskForm, Form
+from wtforms.csrf.session import SessionCSRF
+from datetime import timedelta
+from os import urandom
 from wtforms import (
     FieldList,
     FormField,
@@ -38,4 +41,9 @@ class ExerciseRecordForm(Form):
 
 
 class WorkoutRecordForm(FlaskForm):
+    class Meta:
+        csrf = True
+        csrf_class = SessionCSRF
+        csrf_secret = urandom(16)
+        csrf_time_limit = timedelta(minutes=120)
     exercises = FieldList(FormField(ExerciseRecordForm))
