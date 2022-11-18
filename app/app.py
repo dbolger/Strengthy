@@ -16,10 +16,12 @@ login_manager.login_view = "/login"
 
 # Setup SQLAlchemy
 # https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/#a-minimal-application
-db = SQLAlchemy(app)
-import tables.user
-
-db.create_all()
+with app.app_context():
+    db = SQLAlchemy(app)
+    db.create_all()
 
 # Load routes
-import routes
+from routes import *
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
