@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sqlite3 strenghty.db < sql/schema.sql
+sqlite3 strengthy.db < sql/schema.sql
