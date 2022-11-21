@@ -1,8 +1,45 @@
--- User table
-CREATE TABLE users(
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS workout_records;
+DROP TABLE IF EXISTS set_records;
+DROP TABLE IF EXISTS exercises;
+
+CREATE TABLE IF NOT EXISTS users(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT NOT NULL,
 	password TEXT NOT NULL,
-	email TEXT NOT NULL,
-	hash TEXT NOT NULL
+	email TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS workout_records(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	finished DATE NOT NULL,
+	user_id INTEGER NOT NULL,
+	workout_id INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS set_records(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	lbs INTEGER NOT NULL,
+	reps INTEGER NOT NULL,
+	workout_record_id INTEGER,
+	exercise_id INTEGER,
+	FOREIGN KEY (workout_record_id) REFERENCES workouts(id)
+	FOREIGN KEY (exercise_id) REFERENCES exercises(id)
+);
+
+CREATE TABLE IF NOT EXISTS exercises(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT(100) NOT NULL,
+	sets INTEGER NOT NULL,
+	units INTEGER NOT NULL,
+	type TEXT NOT NULL,
+	workout_id INTEGER,
+	FOREIGN KEY (workout_id) REFERENCES workouts(id)
+);
+
+CREATE TABLE IF NOT EXISTS workouts(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT NOT NULL,
+	user_id INTEGER,
+	FOREIGN KEY(user_id) REFERENCES users(id)
 );
