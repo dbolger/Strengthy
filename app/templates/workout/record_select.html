@@ -13,14 +13,15 @@
 					<div class="content">
 						Exercises:
 						{% for exercise in workout.exercises %}
-						<p>{{ exercise.sets }} x {{ exercise.units }}{% if exercise.type =='time' %} seconds{% endif %} x {{ exercise.name }}</p>
+						<p>{{ exercise.sets }}{% if exercise.type != 'time' %} x {{ exercise.units }}{% endif %} x {{
+							exercise.name }}</p>
 						{% endfor %}
-							<a class="button is-primary" href="/workout/record/{{ workout.id }}">
-								<span class="icon is-small">
-									<i class="fa fa-play"></i>
-								</span>
-								<span>Start</span>
-							</a>
+						<a class="button is-primary" href="/workout/record/{{ workout.id }}">
+							<span class="icon is-small">
+								<i class="fa fa-play"></i>
+							</span>
+							<span>Start</span>
+						</a>
 					</div>
 				</div>
 			</div>

@@ -45,3 +45,18 @@ def home():
     return render_template(
         "home.html", records=records, sets_completed=sets_completed, top3=top3
     )
+
+
+@app.route("/progress", methods=["GET"])
+@login_required
+def progress():
+    exercises = (
+        db.session.query(Exercise)
+        .join(SetRecord)
+        .filter(SetRecord.exercise_id == Exercise.id)
+        .group_by(Exercise.id)
+        .order_by(db.func.count(SetRecord.id).desc())
+        .having(db.func.count(SetRecord.id) > 1)
+        .all()
+    )
+    return render_template("progress.html", exercises=exercises)

@@ -37,59 +37,68 @@
 				<div class="navbar-menu" id="nav-menu">
 					<div class="navbar-start">
 						{% if current_user.is_authenticated %}
-							<span class="navbar-item">
-								<a class="button is-white is-outlined" href="/home">
-									<span class="icon">
-										<i class="fa fa-home"></i>
-									</span>
-									<span>Home</span>
-								</a>
-							</span>
+						<span class="navbar-item">
+							<a class="button is-white is-outlined" href="/home">
+								<span class="icon">
+									<i class="fa fa-home"></i>
+								</span>
+								<span>Home</span>
+							</a>
+						</span>
 
-							<span class="navbar-item">
-								<a class="button is-white is-outlined" href="/workout/record">
-									<span class="icon">
-										<i class="fa fa-pencil"></i>
-									</span>
-									<span>Record a Workout</span>
-								</a>
-							</span>
+						<span class="navbar-item">
+							<a class="button is-white is-outlined" href="/workout/record">
+								<span class="icon">
+									<i class="fa fa-pencil"></i>
+								</span>
+								<span>Record a Workout</span>
+							</a>
+						</span>
 
-							<span class="navbar-item">
-								<a class="button is-white is-outlined" href="/workout/create">
-									<span class="icon">
-										<i class="fa fa-plus"></i>
-									</span>
-									<span>Create a Workout</span>
-								</a>
-							</span>
+						<span class="navbar-item">
+							<a class="button is-white is-outlined" href="/workout/create">
+								<span class="icon">
+									<i class="fa fa-plus"></i>
+								</span>
+								<span>Create a Workout</span>
+							</a>
+						</span>
+
+						<span class="navbar-item">
+							<a class="button is-white is-outlined" href="/progress">
+								<span class="icon">
+									<i class="fa fa-tasks"></i>
+								</span>
+								<span>Your Progress</span>
+							</a>
+						</span>
 						{% endif %}
 					</div>
 
 					<div class="navbar-end">
 						{% if current_user.is_authenticated %}
-							<span class="navbar-item">
-								<a class="button is-white is-outlined" href="/logout">
-									<span>Log Out</span>
-								</a>
-							</span>
+						<span class="navbar-item">
+							<a class="button is-white is-outlined" href="/logout">
+								<span>Log Out</span>
+							</a>
+						</span>
 						{% else %}
-							<span class="navbar-item">
-								<a class="button is-white is-outlined" href="/login">
-									<span class="icon">
-										<i class="fa fa-user"></i>
-									</span>
-									<span>Login</span>
-								</a>
-							</span>
-							<span class="navbar-item">
-								<a class="button is-white is-outlined" href="/register">
-									<span class="icon">
-										<i class="fa fa-pencil"></i>
-									</span>
-									<span>Sign Up</span>
-								</a>
-							</span>
+						<span class="navbar-item">
+							<a class="button is-white is-outlined" href="/login">
+								<span class="icon">
+									<i class="fa fa-user"></i>
+								</span>
+								<span>Login</span>
+							</a>
+						</span>
+						<span class="navbar-item">
+							<a class="button is-white is-outlined" href="/register">
+								<span class="icon">
+									<i class="fa fa-pencil"></i>
+								</span>
+								<span>Sign Up</span>
+							</a>
+						</span>
 						{% endif %}
 					</div>
 				</div>
@@ -104,4 +113,5 @@
 	<!-- TODO: footer -->
 	<script async type="text/javascript" src="/static/js/bulma.js"></script>
 </body>
+
 </html>

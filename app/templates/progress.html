@@ -1,0 +1,22 @@
+{% extends 'base/layout.html' %}
+
+{% block content %}
+<div class="container">
+    {% for completed_workout in exercises %}
+    <div class="columns">
+        <div class="column is-12">
+            <div class="box">
+                <canvas id="chart-{{ loop.index }}">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript" src="/static/js/chart.js"></script>
+<script>
+    {% for completed_workout in exercises %}
+    exercise_chart('chart-{{ loop.index }}', {{ exercises[loop.index0].id }}, "{{ exercises[loop.index0].name }}");
+    {% endfor %}
+</script>
+{% endblock %}
