@@ -2,7 +2,7 @@ from app import app, db
 from datetime import datetime
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_required
-from forms import WorkoutCreateForm, WorkoutRecordForm
+from forms import WorkoutCreateForm, WorkoutRecordForm, WorkoutEditForm
 from tables import Exercise, User, Workout, WorkoutRecord, SetRecord
 
 
@@ -14,7 +14,8 @@ def workout_create():
 
     if form.validate_on_submit():
         # Make sure the user doesn't already have a workout with this name
-        workout = Workout.query.filter_by(user_id=current_user.id, name=name).first()
+        workout = Workout.query.filter_by(
+            user_id=current_user.id, name=name).first()
         if not workout:
             # TODO: add exercises
             workout = Workout(
@@ -42,7 +43,7 @@ def workout_edit(workout_id=None):
     if not workout:
         return redirect(url_for("home"))
 
-    form = WorkoutCreateForm()
+    form = WorkoutEditForm()
 
     if form.validate_on_submit():
         # Form has been submitted, write changes
@@ -61,6 +62,10 @@ def workout_edit(workout_id=None):
                     workout_id=workout.id, id=int(id)
                 ).first()
 
+                if (not name or (not sets and not units)):
+                    workout.exercises.remove(exercise)
+                    continue
+
                 if not exercise:
                     continue
 
@@ -71,9 +76,8 @@ def workout_edit(workout_id=None):
                 exercise.type = type
             else:
                 # Create new exercise
-                workout.exercises.append(Exercise(name, sets, units, type))
-
-        # FIXME: support deleting exercises
+                if (name and sets and units and type):
+                    workout.exercises.append(Exercise(name, sets, units, type))
 
         # Write changes to database
         db.session.commit()

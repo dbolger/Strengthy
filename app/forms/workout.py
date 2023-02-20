@@ -14,6 +14,18 @@ from wtforms import (
 from wtforms.validators import DataRequired, Email, Optional
 
 # /workout/create
+
+
+class ExerciseEditForm(Form):
+    id = HiddenField("id", [Optional()])
+    name = StringField("name", [Optional()])
+    sets = IntegerField("sets", [Optional()])
+    units = FloatField("units", [Optional()])
+    type = SelectField(
+        "type", [Optional()], choices=[("reps", "Reps"), ("time", "Time")]
+    )
+
+
 class ExerciseCreateForm(Form):
     id = HiddenField("id", [Optional()])
     name = StringField("name", [DataRequired()])
@@ -29,7 +41,13 @@ class WorkoutCreateForm(FlaskForm):
     exercises = FieldList(FormField(ExerciseCreateForm), min_entries=1)
 
 
+class WorkoutEditForm(FlaskForm):
+    name = StringField("name", [DataRequired()])
+    exercises = FieldList(FormField(ExerciseEditForm), min_entries=1)
+
 #  /workout/record
+
+
 class SetForm(Form):
     lbs = FloatField("lbs", [Optional()])
     units = IntegerField("units", [Optional()])
